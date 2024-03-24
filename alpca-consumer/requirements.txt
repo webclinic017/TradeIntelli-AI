@@ -1,0 +1,13 @@
+alpaca-py
+alpaca-trade-api
+fastapi==0.110.0
+fastapi_cors==0.0.6
+numpy==1.26.4
+pandas==2.2.1
+pillow==10.2.0
+pydantic==2.6.3
+pydantic_core==2.16.3
+requests==2.31.0
+urllib3==1.26.18
+uvicorn==0.29.0
+
