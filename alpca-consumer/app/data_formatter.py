@@ -13,7 +13,7 @@ class DataFormatter:
                 "EMA200": row['EMA200'],
                 "EMA100": row['EMA100'],
                 "EMA50": row['EMA50'],
-                "is_peak": row['is_peak'],
-                "is_trough": row['is_trough'],
+                "resistance": row['resistance'],
+                "support": row['support'],
             } for index, row in historical_data.iterrows()
         ]

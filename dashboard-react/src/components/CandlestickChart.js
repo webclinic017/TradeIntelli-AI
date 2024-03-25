@@ -58,6 +58,22 @@ function CandlestickChart({ data, id  }) {
                         smooth: true,
                         color: 'green',
                         symbol: 'none'
+                    },
+                    {
+                        name: 'Resistance',
+                        type: 'line',
+                        data: data.map(item => item.resistance),
+                        smooth: true,
+                        color: 'red',
+                        symbol: 'none'
+                    } ,
+                    {
+                        name: 'Support',
+                        type: 'line',
+                        data: data.map(item => item.support),
+                        smooth: true,
+                        color: 'green',
+                        symbol: 'none'
                     }
                 ]
             };

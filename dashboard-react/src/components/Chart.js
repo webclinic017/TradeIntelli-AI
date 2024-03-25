@@ -29,6 +29,8 @@ function Chart({ id }) {
                     EMA200: item.EMA200,
                     EMA100: item.EMA100,
                     EMA50: item.EMA50,
+                    resistance: item.resistance,
+                    support: item.support,
                 }));
                 setData(transformedData);
             } catch (error) {
