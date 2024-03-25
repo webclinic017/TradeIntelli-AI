@@ -14,8 +14,8 @@ function App() {
         const fetchData = async () => {
             setIsLoading(true); // Start loading
             try {
-                const response = await fetch('http://127.0.0.1:8012/historical-data/?stock='
-                 + selectedStock + '&timeframe=' + selectedTimeFrame);
+                const response = await fetch('http://127.0.0.1:8000/historical-data/?stock='
+                 + selectedStock + '&time_frame=' + selectedTimeFrame);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

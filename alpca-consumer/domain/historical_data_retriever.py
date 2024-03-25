@@ -11,10 +11,24 @@ from infastructure.alpca import Alpca
 class HistoricalDataRetriever:
 
     def __init__(self):
+        self.time_frame = None
         self.crypto_client = Alpca.get_crypto_client()
         self.stock_client = Alpca.get_stocks_client()
         self.symbol_map = enums.symbol_map
         self.api = Alpca.get_api()
+
+    @staticmethod
+    def _map_string_to_time_frame(value: str):
+        mapping = {
+            '30M': TimeFrame(30, TimeFrame.Minute),
+            '1H': TimeFrame.Hour,
+            '2H': TimeFrame(2, TimeFrame.Hour),
+            '1D': TimeFrame.Day,
+        }
+        if value in mapping:
+            return mapping[value]
+        else:
+            raise ValueError(f"Unknown TimeFrame value: {value}")
 
     def __get_stock_historical_data(self, symbol: str):
         # start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
@@ -22,7 +36,7 @@ class HistoricalDataRetriever:
 
         return self.api.get_bars(
             symbol=symbol,
-            timeframe=TimeFrame.Day,
+            timeframe=self.time_frame,
             limit=100
         ).df
 
@@ -33,7 +47,7 @@ class HistoricalDataRetriever:
 
         request_params = CryptoBarsRequest(
             symbol_or_symbols=symbol,
-            timeframe=TimeFrame.Hour,
+            timeframe=self.time_frame,
             start=start_date,
             end=end_date
         )
@@ -41,9 +55,10 @@ class HistoricalDataRetriever:
         # Fetch historical data
         return self.crypto_client.get_crypto_bars(request_params).df
 
-    def get_historical_data(self, stock: str):
+    def get_historical_data(self, stock: str, time_frame):
         symbol = self.symbol_map.get(stock.lower())
-
+        self.time_frame = self._map_string_to_time_frame(time_frame)
+        print("self.time_frame", self.time_frame)
         if stock.lower() not in ['btc']:
             historical_data = self.__get_stock_historical_data(symbol)
         else:  # Crypto assets
