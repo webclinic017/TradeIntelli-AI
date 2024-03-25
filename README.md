@@ -72,8 +72,7 @@ http://localhost:3001
 
 
 ## Todo:
-1. add support and resistance 
-2. allow to add more charts with timeframes 
+1. add support and resistance
 3. allow DI with indicators 
 4. add unit tests
 5. Improve UI

@@ -1,5 +1,4 @@
 from alpaca.data import CryptoHistoricalDataClient, StockHistoricalDataClient
-import alpaca_trade_api as tradeapi
 
 
 class Alpca:
@@ -15,7 +14,4 @@ class Alpca:
     def get_stocks_client(cls):
         return StockHistoricalDataClient(cls.API_KEY, cls.API_SECRET)
 
-    @classmethod
-    def get_api(cls):
-        return tradeapi.REST(cls.API_KEY, cls.API_SECRET, cls.BASE_URL, api_version='v2')
 

@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from alpaca.data.requests import CryptoBarsRequest
+from alpaca.data.requests import CryptoBarsRequest, StockBarsRequest
 from alpaca.data.timeframe import TimeFrame
 
 import pandas as pd
@@ -15,7 +15,6 @@ class HistoricalDataRetriever:
         self.crypto_client = Alpca.get_crypto_client()
         self.stock_client = Alpca.get_stocks_client()
         self.symbol_map = enums.symbol_map
-        self.api = Alpca.get_api()
 
     @staticmethod
     def _map_string_to_time_frame(value: str):
@@ -31,14 +30,17 @@ class HistoricalDataRetriever:
             raise ValueError(f"Unknown TimeFrame value: {value}")
 
     def __get_stock_historical_data(self, symbol: str):
-        # start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
-        # end_date = (datetime.now() - timedelta(days=360)).strftime("%Y-%m-%d")
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=5)
 
-        return self.api.get_bars(
-            symbol=symbol,
+        request_params = StockBarsRequest(
+            start=start_date,
+            # end=end_date,
+            limit=100,
+            symbol_or_symbols=symbol,
             timeframe=self.time_frame,
-            limit=100
-        ).df
+        )
+        return self.stock_client.get_stock_bars(request_params).df
 
     def __get_crypto_historical_data(self):
         symbol = 'BTC/USD'
