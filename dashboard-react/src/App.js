@@ -1,11 +1,10 @@
 import React from 'react';
-import Chart from './components/Chart';
+import ChartArray from './components/ChartArray';
 
 function App() {
     return (
         <div className="App">
-            <Chart id="chart1"/>
-            <Chart id="chart2"/>
+            <ChartArray/>
         </div>
     );
 }
