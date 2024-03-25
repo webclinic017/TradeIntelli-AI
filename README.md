@@ -63,3 +63,18 @@ Contributions are what make the open-source community such an amazing place to l
 
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## API docs Open API swagger
+http://127.0.0.1:8000/docs
+
+## Frontend
+http://localhost:3001
+
+
+## Todo:
+1. add support and resistance 
+2. allow to add more charts with timeframes 
+3. allow DI with indicators 
+4. add unit tests
+5. Improve UI
+6. add react to docker
