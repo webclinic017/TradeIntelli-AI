@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import './CandlestickChart.css';
 
-function CandlestickChart({ data }) {
+function CandlestickChart({ data, id  }) {
     useEffect(() => {
         if (data) {
-            const chartDom = document.getElementById('chart');
+            const chartDom = document.getElementById(id);
             const myChart = echarts.init(chartDom);
             const option = {
                 tooltip: {
@@ -63,9 +63,9 @@ function CandlestickChart({ data }) {
             };
             myChart.setOption(option);
         }
-    }, [data]);
+    }, [data, id]);
 
-    return <div id="chart"></div>;
+    return <div id={id} className="chart"></div>;
 }
 
 export default CandlestickChart;

@@ -1,7 +1,9 @@
 .App {
-  text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Allows wrapping if the window is too narrow */
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
