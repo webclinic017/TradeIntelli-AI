@@ -65,7 +65,19 @@ function CandlestickChart({ data, id  }) {
                         data: data.map(item => item.resistance),
                         smooth: true,
                         color: 'red',
-                        symbol: 'none'
+                        symbol: 'none',
+                        markLine: {
+                        silent: true, // Makes the markLine non-interactive
+                        data: [{
+                            yAxis: data.map(item => item.resistance)[1], // The constant support value you want to display
+                            label: {
+                                show: true, // Show the label
+                                position: 'end', // Position it at the end of the line
+                                formatter: 'Resistance: {c}',
+                                color: 'red' // Match the line color
+                            },
+                        }]
+                    }
                     } ,
                     {
                         name: 'Support',
@@ -73,8 +85,21 @@ function CandlestickChart({ data, id  }) {
                         data: data.map(item => item.support),
                         smooth: true,
                         color: 'green',
-                        symbol: 'none'
+                        symbol: 'none',
+                        markLine: {
+                        silent: true, // Makes the markLine non-interactive
+                        data: [{
+                            yAxis: data.map(item => item.support)[0], // The constant support value you want to display
+                            label: {
+                                show: true, // Show the label
+                                position: 'end', // Position it at the end of the line
+                                formatter: 'Support: {c}',
+                                color: 'green' // Match the line color
+                            },
+                        }]
                     }
+                    }
+
                 ]
             };
             myChart.setOption(option);

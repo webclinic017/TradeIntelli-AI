@@ -12,18 +12,29 @@ class Indicators:
 
     @staticmethod
     def calculate_resistance_and_support(historical_data):
-        historical_data['resistance'] = 69000
-        historical_data['support'] = 60000
+        # Initialize resistance and support with None or some default value
+        historical_data['resistance'] = None
+        historical_data['support'] = None
 
-        # for i in range(1, len(historical_data) - 1):  # Start from second and end one before last
-        #     prev_row, curr_row, next_row = historical_data.iloc[i-1], historical_data.iloc[i], historical_data.iloc[i+1]
-        #
-        #     if curr_row['high'] > prev_row['high'] and curr_row['high'] > next_row['high']:
-        #         historical_data.at[curr_row.name, 'is_peak'] = curr_row['high']
-        #
-        #     elif curr_row['low'] < prev_row['low'] and curr_row['low'] < next_row['low']:
-        #         historical_data.at[curr_row.name, 'is_trough'] = curr_row['low']
-        #     else:
-        #         historical_data.at[curr_row.name, 'is_trough'] = prev_row['is_trough']
-        #         historical_data.at[curr_row.name, 'is_peak'] = prev_row['high']
+        # Variables to store the final peak and support values
+        # Lists to store resistance and support values along with their indices
+        resistances = [(0, 1)]
+        supports = [(0, 1)]
+
+        # Iterate to find resistances and supports
+        for i in range(1, len(historical_data) - 1):
+            prev_row, curr_row, next_row = historical_data.iloc[i - 1], historical_data.iloc[i], historical_data.iloc[
+                i + 1]
+
+            # Identify resistance
+            if curr_row['high'] > prev_row['high'] and curr_row['high'] > next_row['high']:
+                resistances.append((curr_row['high'], i))  # Store value and index
+
+            # Identify support
+            if curr_row['low'] < prev_row['low'] and curr_row['low'] < next_row['low']:
+                supports.append((curr_row['low'], i))  # Store value and index
+
+        historical_data['resistance'], _ = resistances[-1]
+        historical_data['support'], _ = supports[-1]
+
 
