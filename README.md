@@ -72,8 +72,7 @@ http://localhost:3001
 
 
 ## Todo:
-1. add support and resistance
-3. allow DI with indicators 
-4. add unit tests
-5. Improve UI
-6. add react to docker
+1. Improve UI
+2. allow DI with indicators 
+3. add unit tests
+4. add react to docker
