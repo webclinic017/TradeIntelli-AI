@@ -6,7 +6,6 @@
 
 .toolbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
   background-color: #f8f8f8; /* Or any color you prefer */

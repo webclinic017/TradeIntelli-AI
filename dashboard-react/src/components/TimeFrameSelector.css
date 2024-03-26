@@ -1,0 +1,13 @@
+/* Add this CSS to your project */
+.timeFrameSelector {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    background-color: white;
+    cursor: pointer;
+}
+
+/* Style the options - this part is more limited in standard HTML and differs between browsers */
+.timeFrameSelector option {
+    padding: 5px 10px;
+}

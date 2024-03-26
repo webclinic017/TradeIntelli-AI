@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CandlestickChart from './CandlestickChart';
 import StockSelector from './StockSelector';
 import TimeFrameSelector from './TimeFrameSelector';
+import './Chart.css'; // Assuming your styles are here
 
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
@@ -44,8 +45,10 @@ function Chart({ id }) {
 
     return (
             <div className="App">
+            <div className="toolbar" id={id+"x"}>
                 <StockSelector onSelect={setSelectedStock} />
                 <TimeFrameSelector selectedTimeFrame={selectedTimeFrame} onSelectTimeFrame={setSelectedTimeFrame} />
+                            </div>
                 {isLoading ? <p>Loading...</p> : <CandlestickChart data={data} id={id}/>}
             </div>
         );
