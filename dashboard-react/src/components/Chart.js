@@ -8,8 +8,8 @@ import './Chart.css';
 
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState('1H'); // Default to 1D
-    const [selectedStartDate, setSelectedStartDate] = useState('30'); // Default to 1D
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState('5M'); // Default to 1D
+    const [selectedStartDate, setSelectedStartDate] = useState('60'); // Default to 1D
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
