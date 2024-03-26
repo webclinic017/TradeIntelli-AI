@@ -12,3 +12,10 @@
   border-bottom: 1px solid #e1e1e1; /* For a subtle separator */
   margin-bottom: 20px; /* Spacing between the toolbar and the chart */
 }
+
+.chart {
+    width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    display: block;
+}

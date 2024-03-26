@@ -1,7 +1,7 @@
 // src/components/CandlestickChart.js
 import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
-import './CandlestickChart.css';
+import './Chart.css';
 
 function CandlestickChart({ data, id  }) {
     useEffect(() => {

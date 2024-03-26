@@ -31,9 +31,9 @@ class HistoricalDataRetriever:
         else:
             raise ValueError(f"Unknown TimeFrame value: {value}")
 
-    def __get_stock_historical_data(self, symbol: str):
+    def __get_stock_historical_data(self, symbol: str, start_date: int):
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=5)
+        start_date = end_date - timedelta(minutes=start_date)
         # start_date = end_date - timedelta(hours=1)
         request_params = StockBarsRequest(
             start=start_date,
@@ -44,10 +44,10 @@ class HistoricalDataRetriever:
         )
         return self.stock_client.get_stock_bars(request_params).df
 
-    def __get_crypto_historical_data(self):
+    def __get_crypto_historical_data(self, start_date: int):
         symbol = 'BTC/USD'
         end_date = datetime.now()
-        start_date = end_date - timedelta(days=5)
+        start_date = end_date - timedelta(minutes=start_date)
 
         request_params = CryptoBarsRequest(
             symbol_or_symbols=symbol,
@@ -59,14 +59,14 @@ class HistoricalDataRetriever:
         # Fetch historical data
         return self.crypto_client.get_crypto_bars(request_params).df
 
-    def get_historical_data(self, stock: str, time_frame):
+    def get_historical_data(self, stock: str, time_frame, start_date: int):
         symbol = self.symbol_map.get(stock.lower())
         self.time_frame = self._map_string_to_time_frame(time_frame)
         print("self.time_frame", self.time_frame)
         if stock.lower() not in ['btc']:
-            historical_data = self.__get_stock_historical_data(symbol)
+            historical_data = self.__get_stock_historical_data(symbol, start_date)
         else:  # Crypto assets
-            historical_data = self.__get_crypto_historical_data()
+            historical_data = self.__get_crypto_historical_data(start_date)
 
         if isinstance(historical_data.index, pd.MultiIndex):
             historical_data = historical_data.reset_index(level=0, drop=True)

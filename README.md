@@ -72,7 +72,9 @@ http://localhost:3001
 
 
 ## Todo:
-1. Improve UI
-2. allow DI with indicators 
-3. add unit tests
-4. add react to docker
+1. TimeFrames
+2. Zoomin and Out
+3. Improve UI 
+4. allow DI with indicators 
+5. add unit tests 
+6. add react to docker
