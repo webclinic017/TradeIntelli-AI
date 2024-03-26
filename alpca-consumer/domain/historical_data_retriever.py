@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from alpaca.data.requests import CryptoBarsRequest, StockBarsRequest
-from alpaca.data.timeframe import TimeFrame
+from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
 
 import pandas as pd
 
@@ -20,10 +20,11 @@ class HistoricalDataRetriever:
     def _map_string_to_time_frame(value: str):
         mapping = {
             '1M': TimeFrame.Minute,
-            '5M': TimeFrame(5, TimeFrame.Minute),
-            '30M': TimeFrame(30, TimeFrame.Minute),
+            '5M': TimeFrame(5, TimeFrameUnit.Minute),
+            '15M': TimeFrame(15, TimeFrameUnit.Minute),
+            '30M': TimeFrame(30, TimeFrameUnit.Minute),
             '1H': TimeFrame.Hour,
-            '2H': TimeFrame(2, TimeFrame.Hour),
+            '2H': TimeFrame(2, TimeFrameUnit.Hour),
             '1D': TimeFrame.Day,
         }
         if value in mapping:
@@ -50,6 +51,7 @@ class HistoricalDataRetriever:
         start_date = end_date - timedelta(minutes=start_date)
 
         request_params = CryptoBarsRequest(
+            adjustment='raw',
             symbol_or_symbols=symbol,
             timeframe=self.time_frame,
             start=start_date,

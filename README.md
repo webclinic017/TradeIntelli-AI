@@ -72,7 +72,6 @@ http://localhost:3001
 
 
 ## Todo:
-1. TimeFrames
 2. Zoomin and Out
 3. Improve UI 
 4. allow DI with indicators 

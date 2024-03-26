@@ -1,4 +1,5 @@
 import React from 'react';
+import './TimeFrameSelector.css'; // Assuming your styles are here
 
 const symbol_map = {
     'BTC': 'BTC',
@@ -11,7 +12,7 @@ const symbol_map = {
 
 function StockSelector({ onSelect }) {
     return (
-        <select onChange={(e) => onSelect(e.target.value)}>
+        <select className="timeFrameSelector" onChange={(e) => onSelect(e.target.value)}>
             {Object.entries(symbol_map).map(([key, value]) => (
                 <option key={key} value={value}>
                     {key.charAt(0).toUpperCase() + key.slice(1)} ({value})
