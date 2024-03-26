@@ -19,6 +19,8 @@ class HistoricalDataRetriever:
     @staticmethod
     def _map_string_to_time_frame(value: str):
         mapping = {
+            '1M': TimeFrame.Minute,
+            '5M': TimeFrame(5, TimeFrame.Minute),
             '30M': TimeFrame(30, TimeFrame.Minute),
             '1H': TimeFrame.Hour,
             '2H': TimeFrame(2, TimeFrame.Hour),
@@ -32,11 +34,11 @@ class HistoricalDataRetriever:
     def __get_stock_historical_data(self, symbol: str):
         end_date = datetime.now()
         start_date = end_date - timedelta(days=5)
-
+        # start_date = end_date - timedelta(hours=1)
         request_params = StockBarsRequest(
             start=start_date,
             # end=end_date,
-            limit=100,
+            # limit=100,
             symbol_or_symbols=symbol,
             timeframe=self.time_frame,
         )
