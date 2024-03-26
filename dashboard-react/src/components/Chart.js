@@ -22,20 +22,8 @@ function Chart({ id }) {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const jsonData = await response.json();
-                const transformedData = jsonData.map(item => ({
-                    date: item.date,
-                    open: item.open,
-                    high: item.high,
-                    low: item.low,
-                    close: item.close,
-                    EMA200: item.EMA200,
-                    EMA100: item.EMA100,
-                    EMA50: item.EMA50,
-                    resistance: item.resistance,
-                    support: item.support,
-                }));
-                setData(transformedData);
+               const jsonData = await response.json();
+                setData(jsonData);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }
