@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import CandlestickChart from './CandlestickChart';
 import StockSelector from './StockSelector';
 import TimeFrameSelector from './TimeFrameSelector';
-import './Chart.css'; // Assuming your styles are here
+import './Chart.css';
 
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
-    const [selectedTimeFrame, setSelectedTimeFrame] = useState('1D'); // Default to 1D
+    const [selectedTimeFrame, setSelectedTimeFrame] = useState('1H'); // Default to 1D
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 

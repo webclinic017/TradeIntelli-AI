@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Chart from './Chart'; // Ensure this path matches where your Chart component is located
+import './Chart.css';
 
 const ChartArray = () => {
     const [charts, setCharts] = useState([{ id: `chart${Date.now()}` }]);
