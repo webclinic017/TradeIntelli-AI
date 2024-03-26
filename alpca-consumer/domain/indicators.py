@@ -12,29 +12,35 @@ class Indicators:
 
     @staticmethod
     def calculate_resistance_and_support(historical_data):
-        # Initialize resistance and support with None or some default value
-        historical_data['resistance'] = None
-        historical_data['support'] = None
+        resistances = []
+        supports = []
 
-        # Variables to store the final peak and support values
-        # Lists to store resistance and support values along with their indices
-        resistances = [(0, 1)]
-        supports = [(0, 1)]
+        # Thresholds
+        min_touches = 2
+        volume_multiplier = 1.5
 
-        # Iterate to find resistances and supports
         for i in range(1, len(historical_data) - 1):
             prev_row, curr_row, next_row = historical_data.iloc[i - 1], historical_data.iloc[i], historical_data.iloc[
                 i + 1]
 
-            # Identify resistance
-            if curr_row['high'] > prev_row['high'] and curr_row['high'] > next_row['high']:
+            # Volume Check
+            avg_volume = historical_data['volume'].iloc[i - min_touches:i + min_touches].mean()
+            is_high_volume = curr_row['volume'] > (avg_volume * volume_multiplier)
+
+            if Indicators.__is_resistance(curr_row, prev_row, next_row, is_high_volume):
                 resistances.append((curr_row['high'], i))  # Store value and index
 
             # Identify support
-            if curr_row['low'] < prev_row['low'] and curr_row['low'] < next_row['low']:
+            if Indicators.__support(curr_row, prev_row, next_row, is_high_volume):
                 supports.append((curr_row['low'], i))  # Store value and index
 
-        historical_data['resistance'], _ = resistances[-1]
-        historical_data['support'], _ = supports[-1]
+        historical_data['resistance'] = resistances[-1][0] if resistances else None
+        historical_data['support'] = supports[-1][0] if supports else None
 
+    @staticmethod
+    def __is_resistance(curr_row, prev_row, next_row, is_high_volume):
+        return curr_row['close'] > prev_row['close'] and curr_row['close'] > next_row['close'] and is_high_volume
 
+    @staticmethod
+    def __support(curr_row, prev_row, next_row, is_high_volume):
+        return curr_row['close'] < prev_row['close'] and curr_row['close'] < next_row['close'] and is_high_volume
