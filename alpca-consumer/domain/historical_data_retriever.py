@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from alpaca.data.requests import CryptoBarsRequest, StockBarsRequest
 from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
+import yfinance as yf
 
 import pandas as pd
 
@@ -45,6 +46,26 @@ class HistoricalDataRetriever:
         )
         return self.stock_client.get_stock_bars(request_params).df
 
+    def __get_gold_historical_data(self, symbol: str, start_date: int, time_frame):
+        end_date = datetime.now()
+        start_date = end_date - timedelta(minutes=start_date)
+        # start_date = end_date - timedelta(hours=1)
+        request_params = StockBarsRequest(
+            start=start_date,
+            # end=end_date,
+            # limit=100,
+            symbol_or_symbols=symbol,
+            timeframe=self.time_frame,
+        )
+
+        y = yf.download(symbol, start=start_date, interval=time_frame.lower())
+        y["high"] = y["High"]
+        y["close"] = y["Close"]
+        y["volume"] = y["Volume"]
+        y["open"] = y["Open"]
+        y["low"] = y["Low"]
+        return y
+
     def __get_crypto_historical_data(self, start_date: int):
         symbol = 'BTC/USD'
         end_date = datetime.now()
@@ -64,8 +85,10 @@ class HistoricalDataRetriever:
     def get_historical_data(self, stock: str, time_frame, start_date: int):
         symbol = self.symbol_map.get(stock.lower())
         self.time_frame = self._map_string_to_time_frame(time_frame)
-        print("self.time_frame", self.time_frame)
-        if stock.lower() not in ['btc']:
+
+        if stock.lower() in ['gold', "ndx100", "spx500"]:
+            historical_data = self.__get_gold_historical_data(symbol, start_date, time_frame)
+        elif stock.lower() not in ['btc']:
             historical_data = self.__get_stock_historical_data(symbol, start_date)
         else:  # Crypto assets
             historical_data = self.__get_crypto_historical_data(start_date)

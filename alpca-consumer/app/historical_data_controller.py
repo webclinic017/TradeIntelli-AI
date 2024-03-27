@@ -11,8 +11,8 @@ router = APIRouter()
 
 
 @router.get("/historical-data")
-async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query("1D"),
-                              start_date: int = Query(30)):
+async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query("1H"),
+                              start_date: int = Query(60*24)):
     try:
         historical_data_retriever = HistoricalDataRetriever()
         symbol = enums.symbol_map.get(stock.lower())
