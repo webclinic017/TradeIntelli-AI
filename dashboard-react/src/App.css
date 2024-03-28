@@ -6,10 +6,21 @@
 
 .toolbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
   background-color: #f8f8f8; /* Or any color you prefer */
   border-bottom: 1px solid #e1e1e1; /* For a subtle separator */
   margin-bottom: 20px; /* Spacing between the toolbar and the chart */
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+.navbar-logo {
+  height: 40px; /* Adjust the size of your logo as needed */
 }

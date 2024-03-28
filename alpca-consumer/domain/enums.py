@@ -1,5 +1,5 @@
 symbol_map = {
-    'gold': 'GC=F',
+    'gold': 'XAUT-USD',
     'nvidia': 'NVDA',
     'ndx100': '^NDX',
     'spx500': '^SPX',
