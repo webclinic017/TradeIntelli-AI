@@ -5,6 +5,8 @@ import StockSelector from './StockSelector';
 import TimeFrameSelector from './TimeFrameSelector';
 import StartDateSelector from './StartDateSelector';
 import './Chart.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
@@ -46,7 +48,9 @@ function Chart({ id }) {
                 <StockSelector onSelect={setSelectedStock} />
                 <StartDateSelector selectedStartDate={selectedStartDate} onSelectStartDate={setSelectedStartDate} />
                 <TimeFrameSelector selectedTimeFrame={selectedTimeFrame} onSelectTimeFrame={setSelectedTimeFrame} />
-                <button onClick={toggleDrawing}>{isDrawingEnabled ? 'Stop Drawing' : 'Start Drawing'}</button>
+                <button onClick={toggleDrawing}>
+                <FontAwesomeIcon icon={faPen} /> {isDrawingEnabled ? 'Stop Drawing' : 'Start Drawing'}
+                 </button>
                 <button onClick={clearDrawing}>Clear Drawing</button>
             </div>
             {isLoading ? <p>Loading...</p> : (
@@ -63,11 +67,12 @@ function Chart({ id }) {
                             pointerEvents: isDrawingEnabled ? 'all' : 'none',
                             // Temporary background color for visibility when drawing is enabled
                             backgroundColor: isDrawingEnabled ? 'rgba(255,255,255,0.3)' : 'transparent',
+                            cursor: isDrawingEnabled ? 'crosshair' : 'default',
                         }}
                         canvasWidth={1600}
                         canvasHeight={800}
                         hideGrid={true}
-                        brushRadius={4}
+                        brushRadius={1}
                     />
                 </div>
             )}
