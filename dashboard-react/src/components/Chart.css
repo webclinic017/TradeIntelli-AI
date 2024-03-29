@@ -19,3 +19,20 @@
     margin: 0 auto;
     display: block;
 }
+
+.chartWithDrawing {
+    position: relative;
+    width: 1400px; /* Match the dimensions of your chart */
+    height: 700px; /* Match the dimensions of your chart */
+}
+.chartWithDrawing > div {
+    width: 100%;
+    height: 100%;
+}
+
+.chartWithDrawing > canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10; /* Ensures the canvas overlays the chart */
+}
