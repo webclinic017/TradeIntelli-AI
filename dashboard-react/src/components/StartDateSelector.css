@@ -1,13 +1,17 @@
 /* Add this CSS to your project */
 .StartDateSelector {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-    background-color: white;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 /* Style the options - this part is more limited in standard HTML and differs between browsers */
 .StartDateSelector option {
-    padding: 5px 10px;
+    display: flex;
+    justify-content: space-around;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
 }

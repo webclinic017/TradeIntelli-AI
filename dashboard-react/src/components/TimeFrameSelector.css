@@ -1,13 +1,24 @@
-/* Add this CSS to your project */
 .timeFrameSelector {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-    background-color: white;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-/* Style the options - this part is more limited in standard HTML and differs between browsers */
-.timeFrameSelector option {
+.timeFrameButton {
+    background: none;
+    border: 1px solid transparent;
     padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.timeFrameButton:hover {
+    background-color: #e2e2e2;
+}
+
+.timeFrameButton.selected {
+    border-color: #666;
+    background-color: #ddd;
 }
