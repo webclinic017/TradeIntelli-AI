@@ -1,7 +1,13 @@
 /* App.css */
-.App {
+.MainApp {
   text-align: center;
   /* Additional styling for your app */
+}
+
+.App {
+  display: flex;
+  flex-direction: row; /* Lays out children in a row */
+  height: 100vh; /* Full height of the viewport */
 }
 
 .toolbar {
@@ -35,4 +41,22 @@
     top: 0;
     left: 0;
     z-index: 10; /* Ensures the canvas overlays the chart */
+}
+
+.vertical-toolbar {
+  flex-basis: 150px; /* Adjust based on your toolbar width preference */
+  flex-shrink: 0; /* Prevents the toolbar from shrinking */
+  /* Your existing vertical-toolbar styles */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the start */
+  padding: 10px;
+  background-color: #f8f8f8;
+  border-right: 1px solid #e1e1e1;
+  padding: 30px 10px 10px; /* Increased top padding */
+}
+
+.content {
+  flex-grow: 1; /* Takes up the rest of the horizontal space */
+  overflow: auto; /* Adds scroll to the content area if needed */
 }

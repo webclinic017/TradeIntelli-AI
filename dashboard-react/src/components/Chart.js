@@ -6,7 +6,7 @@ import TimeFrameSelector from './TimeFrameSelector';
 import StartDateSelector from './StartDateSelector';
 import './Chart.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faEraser } from '@fortawesome/free-solid-svg-icons';
 
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
@@ -44,14 +44,20 @@ function Chart({ id }) {
 
     return (
         <div className="App">
+                    <div className="vertical-toolbar" id={`${id}x-vertical`}>
+                <button onClick={toggleDrawing}>
+                    <FontAwesomeIcon icon={faPen} /> {isDrawingEnabled ? 'Stop Drawing' : 'Start Drawing'}
+                </button>
+                <button onClick={clearDrawing}>
+                <FontAwesomeIcon icon={faEraser} /> Clear Drawing
+                </button>
+                {/* Add more controls as needed */}
+            </div>
+            <div className="content">
             <div className="toolbar" id={`${id}x`}>
                 <StockSelector onSelect={setSelectedStock} />
                 <StartDateSelector selectedStartDate={selectedStartDate} onSelectStartDate={setSelectedStartDate} />
                 <TimeFrameSelector selectedTimeFrame={selectedTimeFrame} onSelectTimeFrame={setSelectedTimeFrame} />
-                <button onClick={toggleDrawing}>
-                <FontAwesomeIcon icon={faPen} /> {isDrawingEnabled ? 'Stop Drawing' : 'Start Drawing'}
-                 </button>
-                <button onClick={clearDrawing}>Clear Drawing</button>
             </div>
             {isLoading ? <p>Loading...</p> : (
                 <div className="chartWithDrawing">
@@ -76,6 +82,7 @@ function Chart({ id }) {
                     />
                 </div>
             )}
+        </div>
         </div>
     );
 }
