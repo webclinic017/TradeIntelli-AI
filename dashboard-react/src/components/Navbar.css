@@ -1,0 +1,67 @@
+:root {
+  --nav-bg-color: #333;
+  --nav-text-color: #fff;
+  --nav-hover-bg-color: #444;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  background-color: var(--nav-bg-color);
+  color: var(--nav-text-color);
+}
+
+.title {
+  margin: 0px 10px 10px;
+  padding: 0px 10px 10px;
+}
+
+.navbar-logo {
+  height: 40px;
+  margin: 0px 10px 10px;
+  padding: 10px 10px 10px;
+
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: var(--nav-text-color);
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.navbar-links a:hover, .navbar-links a.active {
+  background-color: var(--nav-hover-bg-color);
+  border-radius: 5px;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--nav-text-color);
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--nav-bg-color);
+  }
+
+  .navbar-links.expanded {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: inline-block;
+  }
+}

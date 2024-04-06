@@ -1,16 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import logo from '../logo.png';
+import './Navbar.css'; // Assuming the CSS is in Navbar.css
 
 const Navbar = () => {
+  const [isNavExpanded, setIsNavExpanded] = useState(false);
+
   return (
     <nav className="navbar">
       <img src={logo} alt="App Logo" className="navbar-logo" />
-      <div className="title">Chart </div>
-      <ul className="navbar-links">
-        <li><Link to="/stockmovers">Stock Movers</Link></li>
-        <li><Link to="/chartarray">Chart Array</Link></li>
-      </ul>
+       <div className={`navbar-links ${isNavExpanded ? "expanded" : ""}`}>
+        <NavLink to="/stockmovers" activeClassName="active">Stock Movers</NavLink>
+        <NavLink to="/chartarray" activeClassName="active">Chart Array</NavLink>
+      </div>
+
     </nav>
   );
 };
