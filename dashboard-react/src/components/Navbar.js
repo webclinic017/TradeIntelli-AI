@@ -10,8 +10,8 @@ const Navbar = () => {
     <nav className="navbar">
       <img src={logo} alt="App Logo" className="navbar-logo" />
        <div className={`navbar-links ${isNavExpanded ? "expanded" : ""}`}>
-        <NavLink to="/stockmovers" activeClassName="active">Stock Movers</NavLink>
-        <NavLink to="/chartarray" activeClassName="active">Chart Array</NavLink>
+        <NavLink to="/stockmovers" activeClassName="active">Top Movers</NavLink>
+        <NavLink to="/chartarray" activeClassName="active">Chart</NavLink>
       </div>
 
     </nav>
