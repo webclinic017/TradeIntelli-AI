@@ -2,12 +2,16 @@
 import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import './Chart.css';
+import upArrowUrl from '../upArrow.png';
+import downArrowUrl from '../downArrow.png';
 
 function CandlestickChart({ data, id  }) {
     useEffect(() => {
-        if (data) {
+        if (data && data.length > 0) {
             const chartDom = document.getElementById(id);
             const myChart = echarts.init(chartDom);
+            const marketDirection = data[data.length - 1].market_direction || "Uncertain";
+
             const option = {
                 tooltip: {
                     trigger: 'axis',
@@ -102,7 +106,33 @@ function CandlestickChart({ data, id  }) {
                     }
                     }
 
+                ],
+                graphic: [
+                    {
+                        type: 'text',
+                        left: 'center',
+                        top: 20, // Adjusted for better visualization with the arrow
+                        style: {
+                            text: `Market Direction: ${marketDirection}`, // Dynamic label
+                            fill: marketDirection === "Bullish" ? 'green' : marketDirection === "Bearish" ? 'red' : 'grey',
+                            fontSize: 20
+                        }
+                    },
+                                    {
+                        type: 'image',
+                        left: 'center',
+                        top: 40, // Adjust based on the exact positioning you want
+                        style: {
+                            image: marketDirection === "Bullish" ? upArrowUrl : marketDirection === "Bearish" ? downArrowUrl : '',
+                            width: 20,
+                            height: 20
+                        },
+                        z: 100 // Ensure the image is displayed above other chart elements
+                    }
                 ]
+
+
+
             };
             myChart.setOption(option);
         }

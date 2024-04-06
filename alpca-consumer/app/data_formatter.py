@@ -15,5 +15,6 @@ class DataFormatter:
                 "EMA50": row['EMA50'],
                 "resistance": row['resistance'],
                 "support": row['support'],
+                "market_direction": row['market_direction'] if "market_direction" in row else "",
             } for index, row in historical_data.iterrows()
         ]
