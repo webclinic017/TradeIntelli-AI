@@ -49,22 +49,12 @@ class HistoricalDataRetriever:
     def __get_gold_historical_data(self, symbol: str, start_date: int, time_frame):
         end_date = datetime.now()
         start_date = end_date - timedelta(minutes=start_date)
-        # start_date = end_date - timedelta(hours=1)
-        request_params = StockBarsRequest(
-            start=start_date,
-            # end=end_date,
-            # limit=100,
-            symbol_or_symbols=symbol,
-            timeframe=self.time_frame,
-        )
 
-        y = yf.download(symbol, start=start_date, interval=time_frame.lower())
-        y["high"] = y["High"]
-        y["close"] = y["Close"]
-        y["volume"] = y["Volume"]
-        y["open"] = y["Open"]
-        y["low"] = y["Low"]
-        return y
+        gold_data = yf.download(symbol, start=start_date, interval=time_frame.lower())
+        gold_data = gold_data.rename(
+            columns={"High": "high", "Low": "low", "Open": "open", "Close": "close", "Volume": "volume"})
+
+        return gold_data
 
     def __get_crypto_historical_data(self, start_date: int):
         symbol = 'BTC/USD'

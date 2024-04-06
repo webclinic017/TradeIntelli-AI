@@ -1,16 +1,24 @@
 import React from 'react';
 import ChartArray from './components/ChartArray';
-import Navbar from './components/Navbar'; // Adjust the path based on your file structure
+import Navbar from './components/Navbar';
+import StockMovers from './components/StockMovers';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="MainApp">
-      <Navbar />
-      <header className="App-header">
-      </header>
-      <ChartArray/>
-    </div>
+    <Router>
+      <div className="MainApp">
+        <Navbar />
+        <header className="App-header">
+        </header>
+        <Routes>
+          <Route path="/" element={<StockMovers />} />
+          <Route path="/stockmovers" element={<StockMovers />} />
+          <Route path="/chartarray" element={<ChartArray />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
