@@ -31,6 +31,23 @@ class HistoricalDataRetriever:
         if value in mapping:
             return mapping[value]
         else:
+            raise ValueError(f"Unknown TimeFrame value: {value}")    @staticmethod
+
+    @staticmethod
+    def _map_start_time(value: str):
+        x = 50
+        mapping = {
+            '1M': 1 * x,
+            '5M': 5 * x,
+            '15M': 15 * x,
+            '30M': 30 * x,
+            '1H': 60 * x,
+            '2H': 60 * 2 * x,
+            '1D': 60 * 24 * x,
+        }
+        if value in mapping:
+            return mapping[value]
+        else:
             raise ValueError(f"Unknown TimeFrame value: {value}")
 
     def __get_stock_historical_data(self, symbol: str, start_date: int):
@@ -40,7 +57,7 @@ class HistoricalDataRetriever:
         request_params = StockBarsRequest(
             start=start_date,
             # end=end_date,
-            # limit=100,
+            limit=100,
             symbol_or_symbols=symbol,
             timeframe=self.time_frame,
         )
@@ -72,9 +89,36 @@ class HistoricalDataRetriever:
         # Fetch historical data
         return self.crypto_client.get_crypto_bars(request_params).df
 
+    @staticmethod
+    def get_minutes_since_last_market_open(symbol, time_frame):
+        end_date = datetime.utcnow()  # Use UTC timezone to avoid offset-aware issues
+        start_date = end_date - timedelta(days=7)
+
+        # Download data from Yahoo Finance
+        data = yf.download(symbol, start=start_date.strftime('%Y-%m-%d'), end=end_date.strftime('%Y-%m-%d'),
+                           interval=time_frame.lower())
+
+        if not data.empty:
+            last_open_time = data.index.max().to_pydatetime().replace(tzinfo=None)
+
+            # Calculate difference between now (in UTC) and the last open time
+            diff = end_date - last_open_time
+            minutes_since_last_open = diff.total_seconds() / 60
+
+            return minutes_since_last_open
+        else:
+            return None
+
     def get_historical_data(self, stock: str, time_frame, start_date: int):
         symbol = self.symbol_map.get(stock.lower())
         self.time_frame = self._map_string_to_time_frame(time_frame)
+
+        if start_date == 0:
+            minutes_since_last_market_open = HistoricalDataRetriever.get_minutes_since_last_market_open(symbol,
+                                                                                                        "5m")
+            start_date = HistoricalDataRetriever._map_start_time(time_frame) + minutes_since_last_market_open
+            print(f"Auto start date: {start_date}")
+            print(f"minutes_since_last_market_open: {minutes_since_last_market_open}")
 
         if stock.lower() in ['gold', "ndx100", "spx500"]:
             historical_data = self.__get_gold_historical_data(symbol, start_date, time_frame)

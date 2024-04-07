@@ -11,7 +11,7 @@ import { faPen, faEraser } from '@fortawesome/free-solid-svg-icons';
 function Chart({ id }) {
     const [selectedStock, setSelectedStock] = useState('BTC');
     const [selectedTimeFrame, setSelectedTimeFrame] = useState('5M');
-    const [selectedStartDate, setSelectedStartDate] = useState('60');
+    const [selectedStartDate, setSelectedStartDate] = useState('0');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isDrawingEnabled, setIsDrawingEnabled] = useState(false);
