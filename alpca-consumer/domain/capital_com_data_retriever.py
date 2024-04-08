@@ -124,7 +124,6 @@ class CapitalComDataRetriever:
         response = requests.get(market_data_url, headers=auth_headers)
         if response.ok:
             gold_data = response.json()
-            print("Gold Market Data:", gold_data)
             return gold_data
         else:
             raise Exception("Failed to fetch gold price. Status Code:", response.status_code, response.text)
