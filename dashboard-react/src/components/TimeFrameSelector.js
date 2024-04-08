@@ -2,7 +2,7 @@ import React from 'react';
 import './TimeFrameSelector.css'; // Assuming your styles are here
 
 function TimeFrameSelector({ selectedTimeFrame, onSelectTimeFrame }) {
-    const timeFrames = ['1M', '5M', '10M', '15M', '30M', '1H', '2H', '1D'];
+    const timeFrames = ['1M', '5M', '10M', '30M', '1H', '4H', '1D'];
 
     return (
         <div className="timeFrameSelector">

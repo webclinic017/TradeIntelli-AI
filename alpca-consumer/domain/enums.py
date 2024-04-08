@@ -6,3 +6,12 @@ symbol_map = {
     'arm': 'ARMH',
     'BTC': 'BTC/USD'
 }
+
+capital_com_symbol_map = {
+    'gold': 'GOLD',
+    'nvidia': 'NVDA',
+    'ndx100': 'US100',
+    'spx500': 'SPXC',
+    'arm': 'ARMH',
+    'btc': 'BTCUSD'
+}

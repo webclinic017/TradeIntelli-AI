@@ -1,3 +1,6 @@
+from app.data_formatter import DataFormatter
+
+
 class Indicators:
 
     @staticmethod
@@ -24,6 +27,8 @@ class Indicators:
             print("support and resistance:", resistance, latest_price, quarter_range_below_resistance, support,
                   latest_price, quarter_range_above_support)
         else:
+            historical_data['market_direction'] = "Uncertain"
+
             print("not support or resistance:", resistance, support)
             return
 
@@ -74,3 +79,12 @@ class Indicators:
     @staticmethod
     def __support(curr_row, prev_row, next_row, is_high_volume):
         return curr_row['close'] < prev_row['close'] and curr_row['close'] < next_row['close'] and is_high_volume
+
+    @staticmethod
+    def set_market_direction(historical_data, stock):
+        market_direction = historical_data.iloc[len(historical_data) - 1]["market_direction"]
+        if market_direction == "Bullish" or market_direction == "Bearish":
+            prev_rows = historical_data[len(historical_data) - 2: len(historical_data) - 1]
+            last_raw_formatted = str(DataFormatter.formate_data(prev_rows, stock))
+            # send_email(stock, body=last_raw_formatted)
+            print("body:", last_raw_formatted)
