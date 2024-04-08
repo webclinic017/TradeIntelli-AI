@@ -35,28 +35,48 @@ class CapitalComDataRetriever:
     @classmethod
     def create_capital_com_session(cls):
         # Replace these with your actual details
-        identifier = "omerahmed41@gmail.com"
-        password = "E@ar7LUWh6ajcdj"
 
-        headers = {
-            "X-CAP-API-KEY": cls.api_key,
-        }
+        import redis
+        # Connect to Redis
+        r = redis.Redis(host='redis', port=6379, db=0)
 
-        data = {
-            "identifier": identifier,
-            "password": password,
-        }
+        # Store a value
+        r.set('test_key', 'Hello, Redis!')
 
-        # Start session
-        session_response = requests.post(f"{cls.base_url}/session", headers=headers, json=data)
-        if session_response.ok:
-            session_tokens = session_response.headers
-            cst_token = session_tokens.get("CST")
-            x_security_token = session_tokens.get("X-SECURITY-TOKEN")
-            print("Session started successfully.", cst_token, x_security_token)
+        # Retrieve the value
+        cst_token = r.get('cst_token')
+        x_security_token = r.get('x_security_token')
+        if cst_token and x_security_token:
+            print("Session restored successfully.", cst_token, x_security_token)
             return cst_token, x_security_token
         else:
-            raise Exception("Failed to start session.")
+            identifier = "omerahmed41@gmail.com"
+            password = "E@ar7LUWh6ajcdj"
+
+            headers = {
+                "X-CAP-API-KEY": cls.api_key,
+            }
+
+            data = {
+                "identifier": identifier,
+                "password": password,
+            }
+
+            # Start session
+            session_response = requests.post(f"{cls.base_url}/session", headers=headers, json=data)
+            if session_response.ok:
+                session_tokens = session_response.headers
+                cst_token = session_tokens.get("CST")
+                x_security_token = session_tokens.get("X-SECURITY-TOKEN")
+
+                print("Session created successfully.", cst_token, x_security_token)
+
+                r.setex('x_security_token', 600, x_security_token)
+                r.setex('cst_token', 600, cst_token)
+
+                return cst_token, x_security_token
+            else:
+                raise Exception("Failed to start session.")
 
     @staticmethod
     def get_capital_com_server_time():
