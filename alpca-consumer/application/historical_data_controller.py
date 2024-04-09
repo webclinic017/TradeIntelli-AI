@@ -11,6 +11,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import requests
+from domain.market_direction_detector import MarketDirectionDetector
 
 router = APIRouter()
 
@@ -82,7 +83,8 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
 
         Indicators.add_ema(historical_data)
         Indicators.calculate_resistance_and_support(historical_data)
-        Indicators.decide_market_direction(historical_data)
+        MarketDirectionDetector.support_and_resistance(historical_data)
+        MarketDirectionDetector.ema_direction(historical_data)
         return DataFormatter.formate_data(historical_data, stock)
 
     except Exception:

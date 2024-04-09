@@ -11,38 +11,6 @@ class Indicators:
         historical_data['EMA50'] = cls.__calculate_ema(historical_data, 50)
 
     @staticmethod
-    def decide_market_direction(historical_data):
-        print("decide_market_direction")
-
-        latest_price = historical_data['close'].iloc[-1]  # Assuming latest_data is structured as described previously
-        support = historical_data['support'].iloc[-1]
-        resistance = historical_data['resistance'].iloc[-1]
-        if resistance and support:
-            q = (resistance - support) * 0.25
-            quarter_range_above_support = support + q
-            quarter_range_below_resistance = resistance - q
-            # print("support and resistance:", resistance, latest_price, quarter_range_below_resistance, support,
-            #       latest_price, quarter_range_above_support)
-        else:
-            historical_data['market_direction'] = "Uncertain"
-
-            print("not support or resistance:", resistance, support)
-            return
-
-        if support <= latest_price <= quarter_range_above_support \
-                and historical_data['close'].iloc[-1] > historical_data['close'].iloc[-2]:
-            print("Bullish:", resistance, support)
-            historical_data['market_direction'] = "Bullish"
-
-        elif quarter_range_below_resistance <= latest_price <= resistance:
-            # \
-            #     and historical_data['close'].iloc[-1] < historical_data['close'].iloc[-2]:
-            print("check Bearish:", resistance, support)
-            historical_data['market_direction'] = "Bearish"
-        else:
-            historical_data['market_direction'] = "Uncertain"
-
-    @staticmethod
     def calculate_resistance_and_support(historical_data):
         resistances = []
         supports = []
