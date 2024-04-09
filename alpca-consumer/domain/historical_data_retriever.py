@@ -111,7 +111,7 @@ class HistoricalDataRetriever:
         else:
             return None
 
-    def get_historical_data(self, stock: str, time_frame, start_date: int):
+    def get_historical_data(self, stock: str, time_frame, start_date: int = None):
         symbol = self.symbol_map.get(stock.lower())
         # self.time_frame = self._map_string_to_time_frame(time_frame)
         #

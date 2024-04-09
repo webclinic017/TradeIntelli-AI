@@ -1,6 +1,8 @@
 from celery import Celery
 from celery.schedules import crontab
 
+from app.alerts import Alerts
+
 app = Celery(
     'worker',
     broker='redis://redis:6379/0',
@@ -11,7 +13,7 @@ app = Celery(
 
 @app.task
 def test_task():
-    print("Test task executed")
+    Alerts.run_alerts()
 
 
 # After defining your 'app' (Celery instance) and tasks
@@ -19,6 +21,6 @@ def test_task():
 app.conf.beat_schedule = {
     'test-task-every-5-minutes': {
         'task': 'app.celery_app.test_task',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/1'),
     },
 }

@@ -1,6 +1,3 @@
-from app.data_formatter import DataFormatter
-
-
 class Indicators:
 
     @staticmethod
