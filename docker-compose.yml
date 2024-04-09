@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
   web:
     build: ./alpca-consumer/
@@ -17,3 +18,25 @@ services:
     image: redis:latest
     ports:
       - "6379:6379"
+
+  celery:
+    build: ./alpca-consumer/
+    command: celery -A app.celery_app worker --loglevel=info
+    volumes:
+      - ./alpca-consumer:/app
+    depends_on:
+      - web
+      - redis
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  celerybeat:
+    build: ./alpca-consumer/
+    command: celery -A app.celery_app beat --loglevel=info --scheduler celery.beat.PersistentScheduler
+    volumes:
+      - ./alpca-consumer:/app
+    depends_on:
+      - web
+      - redis
+    environment:
+      - PYTHONUNBUFFERED=1

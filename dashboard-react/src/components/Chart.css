@@ -21,7 +21,7 @@
 
 .chart {
     width: 1000px;
-    height: 600px;
+    height: 500px;
     margin: 0 auto;
     display: block;
 }
@@ -29,7 +29,7 @@
 .chartWithDrawing {
     position: relative;
     width: 1000px; /* Match the dimensions of your chart */
-    height: 600px; /* Match the dimensions of your chart */
+    height: 500px; /* Match the dimensions of your chart */
 }
 .chartWithDrawing > div {
     width: 100%;
