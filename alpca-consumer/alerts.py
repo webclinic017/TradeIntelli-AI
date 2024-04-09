@@ -1,7 +1,7 @@
 from app.domain.historical_data_retriever import HistoricalDataRetriever
 from app.domain.indicators import Indicators
 
-from app.app.historical_data_controller import send_email
+from app.application.historical_data_controller import send_email
 
 
 class Alerts:
@@ -17,7 +17,7 @@ class Alerts:
         market_direction_30m = Alerts.get_market_direction("ndx100", "30M")
         print(f"market_direction 5m: {market_direction_5m}")
         print(f"market_direction 30m: {market_direction_30m}")
-        if market_direction_5m == "Bearish" and market_direction_5m == "Bearish":
+        if market_direction_5m == "Bearish" and market_direction_30m == "Bearish":
             subject = f"Trading alert: ndx100 is {market_direction_5m}"
             send_email("ndx100", subject)
 

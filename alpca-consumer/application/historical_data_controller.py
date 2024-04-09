@@ -2,7 +2,7 @@ import json
 
 from fastapi import Query, APIRouter
 
-from app.data_formatter import DataFormatter
+from application.data_formatter import DataFormatter
 from domain.capital_com_data_retriever import CapitalComDataRetriever
 from domain.historical_data_retriever import HistoricalDataRetriever
 from domain.indicators import Indicators

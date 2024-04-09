@@ -1,6 +1,6 @@
 from infastructure.fast_api_app import FastAPIApp
 
-from app.historical_data_controller import router as historical_data_router
+from application.historical_data_controller import router as historical_data_router
 app = FastAPIApp.init_app()
 
 app.include_router(historical_data_router)
