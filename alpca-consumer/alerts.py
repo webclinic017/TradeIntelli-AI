@@ -3,6 +3,8 @@ from app.domain.indicators import Indicators
 
 from app.application.historical_data_controller import send_email
 
+from app.infastructure.redis_service import RedisService
+
 
 class Alerts:
 
@@ -13,13 +15,31 @@ class Alerts:
     @staticmethod
     def run_alerts():
         print("running alerts:")
-        market_direction_5m = Alerts.get_market_direction("ndx100", "5M")
-        market_direction_30m = Alerts.get_market_direction("ndx100", "30M")
-        print(f"market_direction 5m: {market_direction_5m}")
-        print(f"market_direction 30m: {market_direction_30m}")
-        if market_direction_5m == "Bearish" and market_direction_30m == "Bearish":
-            subject = f"Trading alert: ndx100 is {market_direction_5m}"
-            send_email("ndx100", subject)
+        Alerts.check_market_direction("ndx100")
+        Alerts.check_market_direction("gold")
+        Alerts.check_market_direction("nvidia")
+
+    @staticmethod
+    def check_market_direction(symbol):
+        print(f"check_market_direction for: {symbol}")
+        historical_data_5, market_direction_5m = Alerts.get_market_direction(symbol, "5M")
+        historical_data_30, market_direction_30m = Alerts.get_market_direction(symbol, "30M")
+        print(f"{symbol} market_direction 5m: {market_direction_5m}")
+        print(f"{symbol} market_direction 30m: {market_direction_30m}")
+        redis_key_name = f'bar_alert_sent_{symbol}_{market_direction_5m}'
+        alert_sent = RedisService.get(redis_key_name)
+
+        if market_direction_5m == "Bearish" and market_direction_30m == "Bearish" and not alert_sent:
+            subject = f"Trading alert: {symbol} is market is down {market_direction_5m}"
+            body = f"Trading alert: {symbol} is market is down {market_direction_5m}"
+            send_email("ndx100", subject, body)
+            RedisService.set_value(redis_key_name, 600, True)
+
+        elif market_direction_5m == "Bullish" and market_direction_30m == "Bullish" and not alert_sent:
+            subject = f"Trading alert: {symbol} is market is up {market_direction_5m}"
+            body = f"Trading alert: {symbol} is market is up {market_direction_5m}"
+            send_email(f"{symbol}", subject, body)
+            RedisService.set_value(redis_key_name, 600, True)
 
     @staticmethod
     def get_market_direction(stock, time_frame):
@@ -30,6 +50,6 @@ class Alerts:
         Indicators.add_ema(historical_data)
         Indicators.calculate_resistance_and_support(historical_data)
         Indicators.decide_market_direction(historical_data)
-        return historical_data["market_direction"][-1]
+        return historical_data, historical_data["market_direction"][-1]
 
 

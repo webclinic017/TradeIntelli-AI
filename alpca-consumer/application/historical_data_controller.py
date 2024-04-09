@@ -20,7 +20,7 @@ def send_email(stock, subject: str = None, body: str = None):
     smtp_server = "smtp.gmail.com"
     port = 587  # For starttls
     sender_email = "omerahmed41@gmail.com"
-    receiver_email = "omerahmed41@gmail.com"
+    receiver_email = "xzoneappledeveloper@gmail.com"
     password = "yess nais wjfx gemg"
 
     # Create a multipart message and set headers

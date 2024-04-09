@@ -18,7 +18,7 @@ class HistoricalDataRetriever:
 
     @staticmethod
     def _map_string_to_time_frame(value: str):
-        print("_map_string_to_time_frame", value)
+        print(f"_map_string_to_time_frame {value}")
         mapping = {
             '1M': TimeFrame.Minute,
             '5M': TimeFrame(5, TimeFrameUnit.Minute),
@@ -139,7 +139,7 @@ class HistoricalDataRetriever:
                                                                       x_security_token,
                                                                       symbol,
                                                                       time_frame,
-                                                                      50)
+                                                                      100)
 
         if historical_data.empty:
             raise Exception("No data found")

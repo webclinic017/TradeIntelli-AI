@@ -39,7 +39,7 @@ class CapitalComDataRetriever:
         cst_token = RedisService.get('cst_token')
         x_security_token = RedisService.get('x_security_token')
         if cst_token and x_security_token:
-            print("Session restored successfully.", cst_token, x_security_token)
+            print(f"Session restored successfully: {cst_token}, {x_security_token}")
             return cst_token, x_security_token
         else:
             identifier = "omerahmed41@gmail.com"
@@ -61,7 +61,7 @@ class CapitalComDataRetriever:
                 cst_token = session_tokens.get("CST")
                 x_security_token = session_tokens.get("X-SECURITY-TOKEN")
 
-                print("Session created successfully.", cst_token, x_security_token)
+                print(f"Session created successfully: {cst_token}, {x_security_token}")
 
                 RedisService.set_value('x_security_token', 600, x_security_token)
                 RedisService.set_value('cst_token', 600, cst_token)
@@ -128,7 +128,6 @@ class CapitalComDataRetriever:
 
     @staticmethod
     def map_string_to_time_frame(value: str):
-        print("_map_string_to_time_frame", value)
         mapping = {
             '1M': "MINUTE",
             '5M': "MINUTE_5",

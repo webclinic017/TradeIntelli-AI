@@ -21,8 +21,8 @@ class Indicators:
             q = (resistance - support) * 0.25
             quarter_range_above_support = support + q
             quarter_range_below_resistance = resistance - q
-            print("support and resistance:", resistance, latest_price, quarter_range_below_resistance, support,
-                  latest_price, quarter_range_above_support)
+            # print("support and resistance:", resistance, latest_price, quarter_range_below_resistance, support,
+            #       latest_price, quarter_range_above_support)
         else:
             historical_data['market_direction'] = "Uncertain"
 
