@@ -17,5 +17,7 @@ class DataFormatter:
                 "support": row['support'],
                 "market_direction": row['market_direction'] if "market_direction" in row else "",
                 "ema_market_direction": row['ema_market_direction'] if "ema_market_direction" in row else "",
+                "macd_market_direction": row['macd_market_direction'] if "macd_market_direction" in row else "",
+                "macd_histogram": row['macd_histogram'] if "macd_histogram" in row else 0,
             } for index, row in historical_data.iterrows()
         ]

@@ -11,3 +11,4 @@ redis
 yfinance
 celery
 watchdog
+scipy

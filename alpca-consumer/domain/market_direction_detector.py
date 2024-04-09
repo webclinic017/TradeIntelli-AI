@@ -1,4 +1,42 @@
+from scipy.stats import linregress
+import numpy as np
+
+
 class MarketDirectionDetector:
+
+    @classmethod
+    def macd_direction(cls, historical_data, lookback_period=30, multiplier=1):
+        """Predict market direction based on the trend, position, and dynamic strength of the MACD histogram."""
+
+        # Calculate the standard deviation of the MACD histogram over the lookback period
+        historical_volatility = historical_data['macd_histogram'].tail(lookback_period).std()
+        strong_signal_threshold = historical_volatility * multiplier
+
+        # Linear regression on MACD histogram values to determine trend
+        histogram_values = historical_data['macd_histogram'].tail(lookback_period)
+        slope, intercept, r_value, p_value, std_err = linregress(range(len(histogram_values)), histogram_values)
+        histogram_trending_up = slope > 0
+
+        histogram_above_zero = historical_data.iloc[-1]['macd_histogram'] > 0
+
+        # Calculate slope of the histogram changes (acceleration)
+        histogram_changes = np.diff(histogram_values)
+        change_slope, change_intercept, change_r_value, change_p_value, change_std_err = linregress(
+            range(len(histogram_changes)), histogram_changes)
+
+        # Determine increasing strength
+        latest_histogram = historical_data.iloc[-1]['macd_histogram']
+        histogram_change = latest_histogram - historical_data.iloc[-2]['macd_histogram']
+        increasing_strength = change_slope > 0 and abs(histogram_change) > strong_signal_threshold
+
+        if histogram_trending_up and histogram_above_zero:
+            historical_data['macd_market_direction'] = "Bullish"
+        elif not histogram_trending_up and not histogram_above_zero:
+            historical_data['macd_market_direction'] = "Bearish"
+        else:
+            historical_data['macd_market_direction'] = "Uncertain"
+
+        return historical_data
 
     @classmethod
     def ema_direction(cls, historical_data):

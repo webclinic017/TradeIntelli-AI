@@ -11,7 +11,7 @@ capital_com_symbol_map = {
     'gold': 'GOLD',
     'nvidia': 'NVDA',
     'ndx100': 'US100',
-    'spx500': 'SPXC',
+    'spx500': 'US500',
     'arm': 'ARMH',
     'btc': 'BTCUSD'
 }

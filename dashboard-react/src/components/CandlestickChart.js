@@ -12,6 +12,7 @@ function CandlestickChart({ data, id  }) {
             const myChart = echarts.init(chartDom);
             const marketDirection = data[data.length - 1].market_direction || "Uncertain";
             const ema_market_direction = data[data.length - 1].ema_market_direction || "Uncertain";
+            const macd_market_direction = data[data.length - 1].macd_market_direction || "Uncertain";
 
             const option = {
                 tooltip: {
@@ -116,7 +117,7 @@ function CandlestickChart({ data, id  }) {
                         style: {
                             text: `Support and Resistance Market Direction: ${marketDirection}`, // Dynamic label
                             fill: marketDirection === "Bullish" ? 'green' : marketDirection === "Bearish" ? 'red' : 'grey',
-                            fontSize: 20
+                            fontSize: 15
                         }
                     },
                     {
@@ -124,15 +125,26 @@ function CandlestickChart({ data, id  }) {
                         left: 'center',
                         top: 40, // Adjusted for better visualization with the arrow
                         style: {
-                            text: `EMA Market Direction: ${ema_market_direction}`, // Dynamic label
-                            fill: ema_market_direction === "Bullish" ? 'green' : ema_market_direction === "Bearish" ? 'red' : 'grey',
-                            fontSize: 20
+                            text: `MACD Market Direction: ${macd_market_direction}`, // Dynamic label
+                            fill: macd_market_direction === "Bullish" ? 'green' : macd_market_direction === "Bearish" ? 'red' : 'grey',
+                            fontSize: 15
                         }
                     },
-                                    {
+                    {
+                        type: 'text',
+                        left: 'center',
+                        top: 60, // Adjusted for better visualization with the arrow
+                        style: {
+                            text: `EMA Market Direction: ${ema_market_direction}`, // Dynamic label
+                            fill: ema_market_direction === "Bullish" ? 'green' : ema_market_direction === "Bearish" ? 'red' : 'grey',
+                            fontSize: 15
+                        }
+                    },
+
+                    {
                         type: 'image',
                         left: 'center',
-                        top: 60, // Adjust based on the exact positioning you want
+                        top: 80, // Adjust based on the exact positioning you want
                         style: {
                             image: marketDirection === "Bullish" ? upArrowUrl : marketDirection === "Bearish" ? downArrowUrl : '',
                             width: 20,

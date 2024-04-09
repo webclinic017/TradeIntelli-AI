@@ -82,9 +82,11 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
         historical_data = historical_data_retriever.get_historical_data(stock, time_frame, start_date)
 
         Indicators.add_ema(historical_data)
+        Indicators.add_macd(historical_data)
         Indicators.calculate_resistance_and_support(historical_data)
         MarketDirectionDetector.support_and_resistance(historical_data)
         MarketDirectionDetector.ema_direction(historical_data)
+        MarketDirectionDetector.macd_direction(historical_data)
         return DataFormatter.formate_data(historical_data, stock)
 
     except Exception:

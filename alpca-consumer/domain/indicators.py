@@ -4,6 +4,31 @@ class Indicators:
     def __calculate_ema(historical_data, span: int = 200, price: str = "close"):
         return historical_data[price].ewm(span=span, adjust=False).mean()
 
+    @staticmethod
+    def __calculate_macd(historical_data, short_span: int = 12, long_span: int = 26, signal_span: int = 9,
+                       price: str = "close"):
+        """Calculate MACD and its signal line."""
+        # Calculate short and long period EMAs
+        ema_short = Indicators.__calculate_ema(historical_data, span=short_span, price=price)
+        ema_long = Indicators.__calculate_ema(historical_data, span=long_span, price=price)
+
+        # Calculate the MACD line (short EMA - long EMA)
+        macd_line = ema_short - ema_long
+
+        # Calculate the signal line as EMA of the MACD line
+        signal_line = macd_line.ewm(span=signal_span, adjust=False).mean()
+
+        macd_histogram = macd_line - signal_line
+
+        return macd_line, signal_line, macd_histogram
+
+    @classmethod
+    def add_macd(cls, historical_data):
+        macd_line, signal_line, macd_histogram = Indicators.__calculate_macd(historical_data)
+        historical_data['macd_histogram'] = macd_histogram
+        historical_data['signal_line'] = signal_line
+        historical_data['macd_line'] = macd_line
+
     @classmethod
     def add_ema(cls, historical_data):
         historical_data['EMA200'] = cls.__calculate_ema(historical_data, 200)
