@@ -139,7 +139,7 @@ class HistoricalDataRetriever:
                                                                       x_security_token,
                                                                       symbol,
                                                                       time_frame,
-                                                                      100)
+                                                                      200)
 
         if historical_data.empty:
             raise Exception("No data found")

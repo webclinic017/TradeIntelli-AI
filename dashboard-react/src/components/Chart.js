@@ -30,7 +30,8 @@ function Chart({ id }) {
                     throw new Error('Network response was not ok');
                 }
                 const jsonData = await response.json();
-                setData(jsonData);
+                const lastFiftyEntries = jsonData.slice(-50);
+                setData(lastFiftyEntries);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
             }

@@ -91,7 +91,6 @@ class CapitalComDataRetriever:
         if historical_data:
             print(f"user cached data for {historical_data_url}")
         else:
-            # Set up the headers with your session tokens
             headers = {
                 "X-CAP-API-KEY": cls.api_key,
                 "CST": cst_token,
