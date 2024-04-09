@@ -83,9 +83,6 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
         Indicators.add_ema(historical_data)
         Indicators.calculate_resistance_and_support(historical_data)
         Indicators.decide_market_direction(historical_data)
-
-        Indicators.set_market_direction(historical_data, stock)
-
         return DataFormatter.formate_data(historical_data, stock)
 
     except Exception:

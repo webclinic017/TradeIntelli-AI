@@ -1,5 +1,7 @@
 import requests
 
+from infastructure.redis_service import RedisService
+
 
 class CapitalComDataRetriever:
     base_url = "https://demo-api-capital.backend-capital.com/api/v1"
@@ -34,18 +36,8 @@ class CapitalComDataRetriever:
 
     @classmethod
     def create_capital_com_session(cls):
-        # Replace these with your actual details
-
-        import redis
-        # Connect to Redis
-        r = redis.Redis(host='redis', port=6379, db=0)
-
-        # Store a value
-        r.set('test_key', 'Hello, Redis!')
-
-        # Retrieve the value
-        cst_token = r.get('cst_token')
-        x_security_token = r.get('x_security_token')
+        cst_token = RedisService.get('cst_token')
+        x_security_token = RedisService.get('x_security_token')
         if cst_token and x_security_token:
             print("Session restored successfully.", cst_token, x_security_token)
             return cst_token, x_security_token
@@ -71,8 +63,8 @@ class CapitalComDataRetriever:
 
                 print("Session created successfully.", cst_token, x_security_token)
 
-                r.setex('x_security_token', 600, x_security_token)
-                r.setex('cst_token', 600, cst_token)
+                RedisService.set_value('x_security_token', 600, x_security_token)
+                RedisService.set_value('cst_token', 600, cst_token)
 
                 return cst_token, x_security_token
             else:
@@ -94,22 +86,28 @@ class CapitalComDataRetriever:
     def get_asset_last_bars(cls, cst_token, x_security_token, instrument_symbol="SILVER", timeframe="MINUTE_15",
                             number_of_bars=50):
         historical_data_url = f"{cls.base_url}/prices/{instrument_symbol}?resolution={timeframe}&max={number_of_bars}"
-        # Set up the headers with your session tokens
-        headers = {
-            "X-CAP-API-KEY": cls.api_key,
-            "CST": cst_token,
-            "X-SECURITY-TOKEN": x_security_token,
-        }
 
-        # Make the request
-        response = requests.get(historical_data_url, headers=headers)
-        if response.ok:
-            historical_data = response.json()
-            return cls.convert_to_pd(historical_data)
+        historical_data = RedisService.get(historical_data_url)
+        if historical_data:
+            print(f"user cached data for {historical_data_url}")
         else:
-            raise Exception(f"Failed to fetch historical data. Status Code: {response.status_code}",
-                            response.text,
-                            historical_data_url)
+            # Set up the headers with your session tokens
+            headers = {
+                "X-CAP-API-KEY": cls.api_key,
+                "CST": cst_token,
+                "X-SECURITY-TOKEN": x_security_token,
+            }
+            print(f"Sending request for {historical_data_url}")
+            # Make the request
+            response = requests.get(historical_data_url, headers=headers)
+            if response.ok:
+                historical_data = response.json()
+                RedisService.set_value(historical_data_url, 60*5, historical_data)
+            else:
+                raise Exception(f"Failed to fetch historical data. Status Code: {response.status_code}",
+                                response.text,
+                                historical_data_url)
+        return cls.convert_to_pd(historical_data)
 
     @classmethod
     def market_search(cls, api_key, cst_token, x_security_token, symbol):
