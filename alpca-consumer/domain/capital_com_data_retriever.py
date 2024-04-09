@@ -102,7 +102,7 @@ class CapitalComDataRetriever:
             response = requests.get(historical_data_url, headers=headers)
             if response.ok:
                 historical_data = response.json()
-                RedisService.set_value(historical_data_url, 60*5, historical_data)
+                RedisService.set_value(historical_data_url, 60, historical_data)
             else:
                 raise Exception(f"Failed to fetch historical data. Status Code: {response.status_code}",
                                 response.text,
