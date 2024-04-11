@@ -66,32 +66,26 @@ class MarketDirectionDetector:
 
     @staticmethod
     def support_and_resistance(historical_data):
-        print("decide_market_direction")
+        print("deciding market direction")
+        historical_data['market_direction'] = "Uncertain"
 
-        latest_price = historical_data['close'].iloc[-1]  # Assuming latest_data is structured as described previously
-        support = historical_data['support'].iloc[-1]
-        resistance = historical_data['resistance'].iloc[-1]
-        if resistance and support:
-            q = (resistance - support) * 0.25
-            quarter_range_above_support = support + q
-            quarter_range_below_resistance = resistance - q
-            # print("support and resistance:", resistance, latest_price, quarter_range_below_resistance, support,
-            #       latest_price, quarter_range_above_support)
-        else:
-            historical_data['market_direction'] = "Uncertain"
+        for i in range(1, len(historical_data)):
+            support = historical_data['support'].iloc[i]
+            resistance = historical_data['resistance'].iloc[i]
+            if resistance and support:
+                q = (resistance - support) * 0.25
+                quarter_range_above_support = support + q
+                # half_range = support + (q * 2)
+                quarter_range_below_resistance = resistance - q
+                current_price = historical_data['close'].iloc[i]
+                previous_price = historical_data['close'].iloc[i - 1]
+                going_up = current_price > previous_price
+                going_down = current_price < previous_price
 
-            print("not support or resistance:", resistance, support)
-            return
+                if support <= current_price <= quarter_range_above_support and going_up:
+                    historical_data['market_direction'].iloc[i] = "Bullish"
+                elif quarter_range_below_resistance <= current_price <= resistance and going_down:
+                    historical_data['market_direction'].iloc[i] = "Bearish"
 
-        if support <= latest_price <= quarter_range_above_support \
-                and historical_data['close'].iloc[-1] > historical_data['close'].iloc[-2]:
-            print("Bullish:", resistance, support)
-            historical_data['market_direction'] = "Bullish"
+        return historical_data
 
-        elif quarter_range_below_resistance <= latest_price <= resistance:
-            # \
-            #     and historical_data['close'].iloc[-1] < historical_data['close'].iloc[-2]:
-            print("check Bearish:", resistance, support)
-            historical_data['market_direction'] = "Bearish"
-        else:
-            historical_data['market_direction'] = "Uncertain"
