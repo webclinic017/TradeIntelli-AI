@@ -5,8 +5,11 @@ class Indicators:
         return historical_data[price].ewm(span=span, adjust=False).mean()
 
     @staticmethod
-    def __calculate_macd(historical_data, short_span: int = 12, long_span: int = 26, signal_span: int = 9,
-                       price: str = "close"):
+    def __calculate_macd(historical_data,
+                         short_span: int = 12,
+                         long_span: int = 26,
+                         signal_span: int = 9,
+                         price: str = "close"):
         """Calculate MACD and its signal line."""
         # Calculate short and long period EMAs
         ema_short = Indicators.__calculate_ema(historical_data, span=short_span, price=price)
@@ -24,7 +27,7 @@ class Indicators:
 
     @classmethod
     def add_macd(cls, historical_data):
-        macd_line, signal_line, macd_histogram = Indicators.__calculate_macd(historical_data)
+        macd_line, signal_line, macd_histogram = Indicators.__calculate_macd(historical_data, price="open")
         historical_data['macd_histogram'] = macd_histogram
         historical_data['signal_line'] = signal_line
         historical_data['macd_line'] = macd_line
