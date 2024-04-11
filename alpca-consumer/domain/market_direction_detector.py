@@ -1,3 +1,4 @@
+import math
 from scipy.stats import linregress
 import numpy as np
 
@@ -11,31 +12,21 @@ class MarketDirectionDetector:
 
         for i in range(2 + lookback_period, len(historical_data)):
 
+            latest_histogram = historical_data.iloc[i]['macd_histogram']
+            prev_histogram = historical_data.iloc[i-1]['macd_histogram']
+            h_change = latest_histogram - prev_histogram
+            heading_up = h_change > 0
+            heading_down = h_change < 0
             historical_volatility = historical_data['macd_histogram'][i-lookback_period:i].std()
             strong_signal_threshold = historical_volatility * multiplier
-            #
-            # # Linear regression on MACD histogram values to determine trend
-            histogram_values = historical_data['macd_histogram'][i-lookback_period:i]
-            slope, intercept, r_value, p_value, std_err = linregress(range(len(histogram_values)), histogram_values)
-            histogram_trending_up = slope > 0
-            histogram_trending_down = slope < 0
+            strong_signal = abs(latest_histogram) > abs(strong_signal_threshold)
 
             histogram_above_zero = historical_data.iloc[i]['macd_histogram'] > 0
             histogram_below_zero = not histogram_above_zero
 
-            # # Calculate slope of the histogram changes (acceleration)
-            # histogram_changes = np.diff(histogram_values)
-            # change_slope, change_intercept, change_r_value, change_p_value, change_std_err = linregress(
-            #     range(len(histogram_changes)), histogram_changes)
-            #
-            # # Determine increasing strength
-            # latest_histogram = historical_data.iloc[i]['macd_histogram']
-            # histogram_change = latest_histogram - historical_data.iloc[i-1]['macd_histogram']
-            # increasing_strength = change_slope > 0 and abs(histogram_change) > strong_signal_threshold
-
-            if histogram_above_zero:
+            if histogram_above_zero and strong_signal and heading_up:
                 historical_data['macd_market_direction'].iloc[i] = "Bullish"
-            elif histogram_below_zero:
+            elif histogram_below_zero and strong_signal and heading_down:
                 historical_data['macd_market_direction'].iloc[i] = "Bearish"
         return historical_data
 

@@ -74,7 +74,7 @@ http://localhost:3001
 
 ## Todo:
 1. review support and resistance lines
-2. allow to get market direction for each raw
+2. add price change indicator
 3. decide what to show in the chart
 2. Zoom in and Out
 2. allow DI with indicators 
