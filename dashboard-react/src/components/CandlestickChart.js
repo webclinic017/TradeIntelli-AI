@@ -190,6 +190,8 @@ function CandlestickChart({ data, id  }) {
                                                 EMA : ${getDirectionHtml(additionalData.ema_market_direction)}<br/>
                                                 MACD: ${getDirectionHtml(additionalData.macd_market_direction)}<br/>
                                                 <strong>Indicators:</strong><br/>
+                                                macd_histogram: ${additionalData.macd_histogram.toFixed(2)}<br/>
+
                                             </div>
                                             `;
 
