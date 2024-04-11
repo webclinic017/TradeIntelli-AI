@@ -40,23 +40,23 @@ class MarketDirectionDetector:
 
     @classmethod
     def ema_direction(cls, historical_data):
-        i = len(historical_data) - 1
-        # prev_row_2, prev_row = historical_data.iloc[i - 2], historical_data.iloc[i - 1]
-        curr_row, next_row = historical_data.iloc[i - 1], historical_data.iloc[i]
-        ema_up = cls._ema_going_up(historical_data, "EMA50") and cls._ema_going_up(historical_data, "EMA100") and \
-                 cls._ema_going_up(historical_data, "EMA200")
-        ema_down = cls._ema_going_down(historical_data, "EMA50") and cls._ema_going_down(historical_data, "EMA100") and \
-                 cls._ema_going_down(historical_data, "EMA200")
-        if curr_row["EMA50"] > curr_row["EMA100"] > curr_row["EMA200"] and ema_up:
-            historical_data['ema_market_direction'] = "Bullish"
-        elif curr_row["EMA50"] < curr_row["EMA100"] < curr_row["EMA200"] and ema_down:
-            historical_data['ema_market_direction'] = "Bearish"
-        else:
-            historical_data['ema_market_direction'] = "Uncertain"
+        historical_data['ema_market_direction'] = "Uncertain"
+
+        for i in range(2, len(historical_data)):
+            # prev_row_2, prev_row = historical_data.iloc[i - 2], historical_data.iloc[i - 1]
+            curr_row, next_row = historical_data.iloc[i - 1], historical_data.iloc[i]
+            ema_up = cls._ema_going_up(historical_data, i, "EMA50") and cls._ema_going_up(historical_data, i, "EMA100") and \
+                     cls._ema_going_up(historical_data, i, "EMA200")
+            ema_down = cls._ema_going_down(historical_data, "EMA50") and cls._ema_going_down(historical_data, "EMA100") and \
+                     cls._ema_going_down(historical_data, "EMA200")
+            if curr_row["EMA50"] > curr_row["EMA100"] > curr_row["EMA200"] and ema_up:
+                historical_data['ema_market_direction'].iloc[i] = "Bullish"
+            elif curr_row["EMA50"] < curr_row["EMA100"] < curr_row["EMA200"] and ema_down:
+                historical_data['ema_market_direction'].iloc[i] = "Bearish"
+
 
     @staticmethod
-    def _ema_going_up(historical_data, span):
-        i = len(historical_data) - 1
+    def _ema_going_up(historical_data, i, span):
         return historical_data.iloc[i][span] > historical_data.iloc[i - 1][span] > historical_data.iloc[i - 2][span]
 
     @staticmethod
