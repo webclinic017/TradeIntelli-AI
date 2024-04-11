@@ -152,8 +152,39 @@ function CandlestickChart({ data, id  }) {
                         },
                         z: 100 // Ensure the image is displayed above other chart elements
                     }
-                ]
+                ],
+                tooltip: {
 
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross'
+                    },
+                    formatter: function (params) {
+                    const dataIndex = params[0].dataIndex; // Assuming all series have the same dataIndex
+                   const additionalData = data[dataIndex];
+                        let res = `${params[0].name}<br/>`; // Starting with the name (usually the date)
+                        params.forEach(param => {
+                            if (param.seriesName === 'Candlestick') {
+                                res += `
+                                    Open: ${param.data[1]}<br/>
+                                    Close: ${param.data[2]}<br/>
+                                    Low: ${param.data[3]}<br/>
+                                    High: ${param.data[4]}<br/>
+                                `;
+
+                                res += `Market direction: ${additionalData.market_direction}<br/>`;
+                                res += `EMA Market direction: ${additionalData.ema_market_direction}<br/>`;
+                                res += `MACD Market direction: ${additionalData.macd_market_direction}<br/>`;
+
+                            } else {
+                                res += `${param.seriesName}: ${param.value}<br/>`;
+                            }
+
+
+                        });
+                        return res;
+                    }
+}
 
 
             };

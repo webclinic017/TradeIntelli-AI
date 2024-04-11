@@ -73,7 +73,9 @@ http://localhost:3001
 
 
 ## Todo:
-1. Zoom in and Out
+1. review support and resistance lines
+2. allow to get market direction for each raw
+2. Zoom in and Out
 2. allow DI with indicators 
 3. add unit tests 
 4. add react to docker
