@@ -11,6 +11,7 @@ function Positions({ positions }) {
           <tr>
             <th>Instrument</th>
             <th>createdDate</th>
+            <th>dealId</th>
             <th>Size</th>
             <th>Direction</th>
             <th>Level</th>
@@ -25,6 +26,7 @@ function Positions({ positions }) {
             <tr key={index}>
               <td>{position.market.instrumentName}</td>
               <td>{position.position.createdDate}</td>
+              <td>{position.position.dealId}</td>
               <td>{position.position.size}</td>
               <td>{position.position.direction}</td>
               <td>{position.position.level}</td>

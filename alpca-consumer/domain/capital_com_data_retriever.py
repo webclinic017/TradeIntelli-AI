@@ -1,5 +1,6 @@
 import requests
 
+from domain import enums
 from infastructure.capital_com import CapitalCom
 from infastructure.redis_service import RedisService
 
@@ -70,6 +71,48 @@ class CapitalComDataRetriever:
                 return cst_token, x_security_token
             else:
                 raise Exception("Failed to start session.")
+
+    @staticmethod
+    def delete_position_at_capital(cst_token, x_security_token, deal_id):
+        headers = {
+            "X-SECURITY-TOKEN": x_security_token,
+            "CST": cst_token,
+            "Content-Type": "application/json"
+        }
+
+        # Make the DELETE request
+        response = requests.delete(f"{CapitalComDataRetriever.base_url}/positions/{deal_id}", headers=headers)
+        if response.status_code == 200:
+            return True
+        else:
+            print(f"Failed to delete position: {response.status_code} - {response.text}")
+            return False
+
+    @staticmethod
+    def open_position(cst_token, x_security_token, symbol, stop_loss, profit_level, size, direction: str = "BUY"):
+        epic = enums.capital_com_symbol_map.get(symbol.lower())
+
+        url = f"{CapitalComDataRetriever.base_url}/positions"
+        headers = {
+            "X-SECURITY-TOKEN": x_security_token,
+            "CST": cst_token,
+            "Content-Type": "application/json"
+        }
+        payload = {
+            'epic': epic,
+            'direction': direction,
+            'size': size,
+            'guaranteedStop': False,
+            # 'stopLevel': stop_loss,
+            # 'profitLevel': profit_level
+        }
+
+        response = requests.post(url, headers=headers, json=payload)
+        if response.status_code == 200 or response.status_code == 201:
+            print('Position opened successfully')
+            return response.json()
+        else:
+            raise Exception(f"Failed to open position: {response.status_code} - {response.text}")
 
     @staticmethod
     def get_open_positions(cst_token, x_security_token):

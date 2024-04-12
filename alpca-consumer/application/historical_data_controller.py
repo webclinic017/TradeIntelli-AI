@@ -1,4 +1,4 @@
-from fastapi import Query, APIRouter
+from fastapi import Query, APIRouter, HTTPException
 
 from application.data_formatter import DataFormatter
 from domain.capital_com_data_retriever import CapitalComDataRetriever
@@ -17,6 +17,32 @@ router = APIRouter()
 async def market_search(stock: str = Query('BTC')):
     cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
     return CapitalComDataRetriever.market_search(CapitalComDataRetriever.api_key, cst_token, x_security_token, stock)
+
+
+@router.get("/capital-open-new-position")
+async def open_position(stock: str = Query('BTC'),
+                        stop_loss: int = Query(20),
+                        profit_level: int = Query(20),
+                        size: float = Query(0.5)):
+    cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
+    return CapitalComDataRetriever.open_position(cst_token,
+                                                 x_security_token,
+                                                 stock,
+                                                 stop_loss,
+                                                 profit_level,
+                                                 size)
+
+
+@router.delete("/positions/{dealId}")
+def delete_position(deal_id: str):
+    cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
+    success = CapitalComDataRetriever.delete_position_at_capital(cst_token,
+                                                                 x_security_token,
+                                                                 deal_id)
+    if success:
+        return {"message": "Position deleted successfully."}
+    else:
+        raise HTTPException(status_code=400, detail="Failed to delete position at Capital.com")
 
 
 @router.get("/capital-open-position")
@@ -39,6 +65,7 @@ async def get_account_info():
     open_positions = positions_response.json()
     print(f"open_positions: {open_positions}")
     return open_positions
+
 
 @router.get("/stocks-movers")
 async def get_historical_data():
