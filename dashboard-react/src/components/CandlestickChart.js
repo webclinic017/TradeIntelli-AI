@@ -162,6 +162,8 @@ function CandlestickChart({ data, id  }) {
                         const dataIndex = params[0].dataIndex; // Assuming all series have the same dataIndex
                         const additionalData = data[dataIndex];
                         let res = `${params[0].name}<br/>`; // Starting with the name (usually the date)
+                        let leverage = 100;
+                        let amount_invested = 100;
 
                         const getDirectionHtml = (direction) => {
                             let color = 'grey'; // Default color
@@ -190,10 +192,15 @@ function CandlestickChart({ data, id  }) {
                                                 EMA : ${getDirectionHtml(additionalData.ema_market_direction)}<br/>
                                                 MACD: ${getDirectionHtml(additionalData.macd_market_direction)}<br/>
 
-                                                <strong>Indicators Performance:</strong><br/>
-                                                ema_profit: ${additionalData.ema_profit.toFixed(2)}<br/>
-                                                macd_profit: ${additionalData.macd_profit.toFixed(2)}<br/>
-                                                s_r_profit: ${additionalData.s_r_profit.toFixed(2)}<br/>
+                                                <strong>Indicators Performance $ ${amount_invested}, leverage 1:${leverage}:</strong><br/>
+                                                ema_profit: ${additionalData.ema_profit.toFixed(2)} pip,
+                                                 $ ${(additionalData.ema_profit/param.data[1]*amount_invested*leverage).toFixed(2)}<br/>
+
+                                                macd_profit: ${additionalData.macd_profit.toFixed(2)} pip,
+                                                 $ ${(additionalData.macd_profit/param.data[1]*amount_invested*leverage).toFixed(2)}<br/>
+
+                                                s_r_profit: ${additionalData.s_r_profit.toFixed(2)} pip,
+                                                 $ ${(additionalData.s_r_profit/param.data[1]*amount_invested*leverage).toFixed(2)}<br/>
 
                                                 <strong>Indicators:</strong><br/>
                                                 macd_histogram: ${additionalData.macd_histogram.toFixed(2)}<br/>
