@@ -88,9 +88,10 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
         MarketDirectionDetector.support_and_resistance(historical_data)
         MarketDirectionDetector.ema_direction(historical_data)
         MarketDirectionDetector.macd_direction(historical_data)
-        PerformanceTester.calculate_profit(historical_data, indicator="market_direction")
-        PerformanceTester.calculate_profit(historical_data, indicator="ema_market_direction")
-        PerformanceTester.calculate_profit(historical_data, indicator="macd_market_direction")
+
+        historical_data["s_r_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="market_direction")
+        historical_data["ema_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="ema_market_direction")
+        historical_data["macd_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="macd_market_direction")
         return DataFormatter.formate_data(historical_data, stock)
 
     except Exception:

@@ -189,6 +189,12 @@ function CandlestickChart({ data, id  }) {
                                                 S&R: ${getDirectionHtml(additionalData.market_direction)}<br/>
                                                 EMA : ${getDirectionHtml(additionalData.ema_market_direction)}<br/>
                                                 MACD: ${getDirectionHtml(additionalData.macd_market_direction)}<br/>
+
+                                                <strong>Indicators Performance:</strong><br/>
+                                                ema_profit: ${additionalData.ema_profit.toFixed(2)}<br/>
+                                                macd_profit: ${additionalData.macd_profit.toFixed(2)}<br/>
+                                                s_r_profit: ${additionalData.s_r_profit.toFixed(2)}<br/>
+
                                                 <strong>Indicators:</strong><br/>
                                                 macd_histogram: ${additionalData.macd_histogram.toFixed(2)}<br/>
 
