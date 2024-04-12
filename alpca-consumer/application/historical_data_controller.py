@@ -25,6 +25,21 @@ async def get_open_positions():
     return CapitalComDataRetriever.get_open_positions(cst_token, x_security_token)
 
 
+@router.get("/capital-account_info")
+async def get_account_info():
+    cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
+    account_info_url = f"{CapitalComDataRetriever.base_url}/accounts"
+    headers = {
+        "X-SECURITY-TOKEN": x_security_token,
+        "CST": cst_token,
+        "Content-Type": "application/json"
+    }
+
+    positions_response = requests.get(account_info_url, headers=headers)
+    open_positions = positions_response.json()
+    print(f"open_positions: {open_positions}")
+    return open_positions
+
 @router.get("/stocks-movers")
 async def get_historical_data():
     url = "https://data.alpaca.markets/v1beta1/screener/stocks/movers?top=10"
