@@ -13,8 +13,8 @@ app = Celery(
 
 @app.task
 def test_task():
-    Alerts.run_alerts()
-
+    # Alerts.run_alerts()
+    pass
 
 # After defining your 'app' (Celery instance) and tasks
 

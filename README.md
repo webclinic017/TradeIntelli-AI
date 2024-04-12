@@ -73,9 +73,11 @@ http://localhost:3001
 
 
 ## Todo:
-1. review support and resistance lines
-2. add price change indicator
-3. decide what to show in the chart
+1. combine timeframe or indicators for better alert.
+2. studay indicator profit for past 200 bars.
+2. review support and resistance lines
+2. add price-change indicator
+3. allow users to decide what to show in the chart
 2. Zoom in and Out
 2. allow DI with indicators 
 3. add unit tests 
