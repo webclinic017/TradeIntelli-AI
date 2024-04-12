@@ -25,9 +25,9 @@ class MarketDirectionDetector:
             histogram_below_zero = not histogram_above_zero
 
             if histogram_above_zero and strong_signal and heading_up:
-                historical_data['macd_market_direction'].iloc[i] = "Bullish"
+                historical_data.iloc[i, historical_data.columns.get_loc('macd_market_direction')] = "Bullish"
             elif histogram_below_zero and strong_signal and heading_down:
-                historical_data['macd_market_direction'].iloc[i] = "Bearish"
+                historical_data.iloc[i, historical_data.columns.get_loc('macd_market_direction')] = "Bearish"
         return historical_data
 
     @classmethod
@@ -42,9 +42,10 @@ class MarketDirectionDetector:
             ema_down = cls._ema_going_down(historical_data, "EMA50") and cls._ema_going_down(historical_data, "EMA100") and \
                      cls._ema_going_down(historical_data, "EMA200")
             if curr_row["EMA50"] > curr_row["EMA100"] > curr_row["EMA200"] and ema_up:
-                historical_data['ema_market_direction'].iloc[i] = "Bullish"
+                historical_data.iloc[i, historical_data.columns.get_loc('ema_market_direction')] = "Bullish"
+
             elif curr_row["EMA50"] < curr_row["EMA100"] < curr_row["EMA200"] and ema_down:
-                historical_data['ema_market_direction'].iloc[i] = "Bearish"
+                historical_data.iloc[i, historical_data.columns.get_loc('ema_market_direction')] = "Bearish"
 
     @staticmethod
     def _ema_going_up(historical_data, i, span):
@@ -74,9 +75,10 @@ class MarketDirectionDetector:
                 going_down = current_price < previous_price
 
                 if support <= current_price <= quarter_range_above_support and going_up:
-                    historical_data['market_direction'].iloc[i] = "Bullish"
+                    historical_data.iloc[i, historical_data.columns.get_loc('market_direction')] = "Bullish"
+
                 elif quarter_range_below_resistance <= current_price <= resistance and going_down:
-                    historical_data['market_direction'].iloc[i] = "Bearish"
+                    historical_data.iloc[i, historical_data.columns.get_loc('market_direction')] = "Bearish"
 
         return historical_data
 
