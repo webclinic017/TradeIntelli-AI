@@ -1,11 +1,12 @@
 import requests
 
+from infastructure.capital_com import CapitalCom
 from infastructure.redis_service import RedisService
 
 
 class CapitalComDataRetriever:
-    base_url = "https://demo-api-capital.backend-capital.com/api/v1"
-    api_key = "zsOQe25jw8uT5mPj"
+    base_url = CapitalCom.base_url
+    api_key = CapitalCom.api_key
 
     @staticmethod
     def convert_to_pd(raw_historical_data):

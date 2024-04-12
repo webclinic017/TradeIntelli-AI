@@ -1,11 +1,8 @@
 from app.domain.historical_data_retriever import HistoricalDataRetriever
 from app.domain.indicators import Indicators
-
-from app.application.historical_data_controller import send_email
-
-from app.infastructure.redis_service import RedisService
-
 from app.domain.market_direction_detector import MarketDirectionDetector
+from app.infastructure.notification_manager import NotificationManager
+from app.infastructure.redis_service import RedisService
 
 
 class Alerts:
@@ -36,7 +33,7 @@ class Alerts:
                 not alert_sent:
             subject = f"Trading alert: {symbol} is market is down {market_direction_5m}"
             body = f"Trading alert: {symbol} is market is down {market_direction_5m}"
-            send_email("ndx100", subject, body)
+            NotificationManager.send_email("ndx100", subject, body)
             RedisService.set_value(redis_key_name, 600, True)
 
         elif market_direction_5m == "Bullish" and market_direction_30m == "Bullish" and\
@@ -44,7 +41,7 @@ class Alerts:
                 not alert_sent:
             subject = f"Trading alert: {symbol} is market is up {market_direction_5m}"
             body = f"Trading alert: {symbol} is market is up {market_direction_5m}"
-            send_email(f"{symbol}", subject, body)
+            NotificationManager.send_email(f"{symbol}", subject, body)
             RedisService.set_value(redis_key_name, 600, True)
 
     @staticmethod
@@ -55,7 +52,7 @@ class Alerts:
 
         Indicators.add_ema(historical_data)
         Indicators.calculate_resistance_and_support(historical_data)
-        
+
         MarketDirectionDetector.support_and_resistance(historical_data)
         MarketDirectionDetector.ema_direction(historical_data)
 

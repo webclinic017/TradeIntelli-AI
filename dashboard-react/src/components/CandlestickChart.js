@@ -193,6 +193,7 @@ function CandlestickChart({ data, id  }) {
                                                 MACD: ${getDirectionHtml(additionalData.macd_market_direction)}<br/>
 
                                                 <strong>Indicators Performance $ ${amount_invested}, leverage 1:${leverage}:</strong><br/>
+                                                todo: use start price to callable profit in dollar <br/>
                                                 ema_profit: ${additionalData.ema_profit.toFixed(2)} pip,
                                                  $ ${(additionalData.ema_profit/param.data[1]*amount_invested*leverage).toFixed(2)}<br/>
 
