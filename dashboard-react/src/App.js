@@ -2,6 +2,7 @@ import React from 'react';
 import ChartArray from './components/ChartArray';
 import Navbar from './components/Navbar';
 import StockMovers from './components/StockMovers';
+import PositionsContainer from './components/PositionsContainer';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<StockMovers />} />
           <Route path="/stockmovers" element={<StockMovers />} />
           <Route path="/chartarray" element={<ChartArray />} />
+          <Route path="/positions" element={<PositionsContainer />} />
         </Routes>
       </div>
     </Router>

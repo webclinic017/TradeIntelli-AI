@@ -12,6 +12,7 @@ const Navbar = () => {
        <div className={`navbar-links ${isNavExpanded ? "expanded" : ""}`}>
         <NavLink to="/stockmovers" activeClassName="active">Top Movers</NavLink>
         <NavLink to="/chartarray" activeClassName="active">Chart</NavLink>
+        <NavLink to="/positions" activeClassName="active">Portfolio</NavLink>
       </div>
 
     </nav>

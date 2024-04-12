@@ -72,6 +72,19 @@ class CapitalComDataRetriever:
                 raise Exception("Failed to start session.")
 
     @staticmethod
+    def get_open_positions(cst_token, x_security_token):
+        positions_url = f"{CapitalComDataRetriever.base_url}/positions"
+        positions_headers = {
+            "X-SECURITY-TOKEN": x_security_token,
+            "CST": cst_token,
+            "Content-Type": "application/json"
+        }
+
+        positions_response = requests.get(positions_url, headers=positions_headers)
+        open_positions = positions_response.json()
+        print(f"open_positions: {open_positions}")
+        return open_positions
+    @staticmethod
     def get_capital_com_server_time():
         base_url = "https://demo-api-capital.backend-capital.com/api/v1"
         time_response = requests.get(f"{base_url}/time")

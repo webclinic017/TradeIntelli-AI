@@ -19,6 +19,12 @@ async def market_search(stock: str = Query('BTC')):
     return CapitalComDataRetriever.market_search(CapitalComDataRetriever.api_key, cst_token, x_security_token, stock)
 
 
+@router.get("/capital-open-position")
+async def get_open_positions():
+    cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
+    return CapitalComDataRetriever.get_open_positions(cst_token, x_security_token)
+
+
 @router.get("/stocks-movers")
 async def get_historical_data():
     url = "https://data.alpaca.markets/v1beta1/screener/stocks/movers?top=10"

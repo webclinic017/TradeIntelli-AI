@@ -13,3 +13,17 @@
   margin-bottom: 20px; /* Spacing between the toolbar and the chart */
 }
 
+.positions-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.positions-container th, .positions-container td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.positions-container th {
+  background-color: #f4f4f4;
+}
