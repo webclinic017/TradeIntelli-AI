@@ -21,7 +21,7 @@ services:
 
   celery:
     build: ./alpca-consumer/
-    command: celery -A app.celery_app worker --loglevel=info
+    command: celery -A celery_app worker --loglevel=info
     volumes:
       - ./alpca-consumer:/app
     depends_on:
@@ -32,7 +32,7 @@ services:
 
   celerybeat:
     build: ./alpca-consumer/
-    command: celery -A app.celery_app beat --loglevel=info --scheduler celery.beat.PersistentScheduler
+    command: celery -A celery_app beat --loglevel=info --scheduler celery.beat.PersistentScheduler
     volumes:
       - ./alpca-consumer:/app
     depends_on:
