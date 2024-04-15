@@ -13,6 +13,7 @@ const Navbar = () => {
         <NavLink to="/stockmovers" activeClassName="active">Top Movers</NavLink>
         <NavLink to="/chartarray" activeClassName="active">Chart</NavLink>
         <NavLink to="/positions" activeClassName="active">Portfolio</NavLink>
+        <NavLink to="/marketnavigation" activeClassName="active">Most Traded</NavLink>
       </div>
 
     </nav>

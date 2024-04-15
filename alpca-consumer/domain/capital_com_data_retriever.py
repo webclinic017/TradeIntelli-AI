@@ -182,6 +182,23 @@ class CapitalComDataRetriever:
         else:
             raise Exception("Failed to fetch gold price. Status Code:", response.status_code, response.text)
 
+    @classmethod
+    def market_navigation(cls, cst_token, x_security_token, category_id, limit=20):
+        auth_headers = {
+            "X-CAP-API-KEY": cls.api_key,
+            "CST": cst_token,
+            "X-SECURITY-TOKEN": x_security_token,
+        }
+
+        # Fetch the current price for gold
+        market_data_url = f"{cls.base_url}/marketnavigation/{category_id}?limit={limit}"  # Adjust the endpoint as necessary
+        response = requests.get(market_data_url, headers=auth_headers)
+        if response.ok:
+            gold_data = response.json()
+            return gold_data
+        else:
+            raise Exception(f"Failed to fetch{category_id}. Status Code:", response.status_code, response.text)
+
     @staticmethod
     def map_string_to_time_frame(value: str):
         mapping = {

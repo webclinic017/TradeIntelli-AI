@@ -5,7 +5,7 @@ import StockMovers from './components/StockMovers';
 import PositionsContainer from './components/PositionsContainer';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import MarketNavigation from './components/MarketNavigation';
 function App() {
   return (
     <Router>
@@ -18,6 +18,7 @@ function App() {
           <Route path="/stockmovers" element={<StockMovers />} />
           <Route path="/chartarray" element={<ChartArray />} />
           <Route path="/positions" element={<PositionsContainer />} />
+          <Route path="/marketnavigation" element={<MarketNavigation />} />
         </Routes>
       </div>
     </Router>
