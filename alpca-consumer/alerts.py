@@ -10,7 +10,8 @@ class Alerts:
     @staticmethod
     def run_alerts():
         print("running alerts:")
-        TradesOpportunityScanner.scan_most_trades()
+        res = TradesOpportunityScanner.scan_most_trades()
+        print(f"TradesOpportunityScanner output: {res}")
 
 
 
