@@ -8,7 +8,7 @@ import traceback
 import requests
 from domain.market_direction_detector import MarketDirectionDetector
 from domain.performance_tester import PerformanceTester
-
+from domain.trades_opportunity_scanner import TradesOpportunityScanner
 
 router = APIRouter()
 
@@ -93,22 +93,17 @@ async def get_historical_data():
 async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query("1H"),
                               start_date: int = Query(60 * 24)):
     try:
-        historical_data_retriever = HistoricalDataRetriever()
-        historical_data = historical_data_retriever.get_historical_data(stock, time_frame, start_date)
+        historical_data = HistoricalDataRetriever.get_market_date_and_direction(stock, time_frame)
+        PerformanceTester.calculate_profit_all(historical_data)
 
-        Indicators.add_ema(historical_data)
-        Indicators.add_macd(historical_data)
-        Indicators.calculate_resistance_and_support(historical_data)
-        MarketDirectionDetector.ema_direction(historical_data)
-        MarketDirectionDetector.macd_direction(historical_data)
-        # historical_data.to_csv('historical_data.csv', index_label='Date')
-        MarketDirectionDetector.support_and_resistance(historical_data)
-
-        historical_data["s_r_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="market_direction")
-        historical_data["ema_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="ema_market_direction")
-        historical_data["macd_profit"] = PerformanceTester.calculate_profit(historical_data, indicator="macd_market_direction")
         return DataFormatter.formate_data(historical_data, stock)
 
     except Exception:
         traceback.print_exc()
         return []
+
+
+@router.get("/scan-trades-opportunities")
+async def scan_trades_opportunities():
+    return TradesOpportunityScanner.scan_most_trades()
+

@@ -4,6 +4,8 @@ from alpaca.data.timeframe import TimeFrame, TimeFrameUnit
 import yfinance as yf
 from domain import enums
 from domain.capital_com_data_retriever import CapitalComDataRetriever
+from domain.indicators import Indicators
+from domain.market_direction_detector import MarketDirectionDetector
 from infastructure.alpca import Alpca
 
 
@@ -145,7 +147,18 @@ class HistoricalDataRetriever:
             raise Exception("No data found")
         return historical_data
 
+    @staticmethod
+    def get_market_date_and_direction(stock, time_frame):
+        # print(f"get_market_direction: {stock}, {time_frame}")
+        historical_data_retriever = HistoricalDataRetriever()
+        historical_data = historical_data_retriever.get_historical_data(stock, time_frame)
 
-# capital.com
-# API key zsOQe25jw8uT5mPj
-#  password E@ar7LUWh6ajcdj
+        Indicators.add_ema(historical_data)
+        Indicators.add_macd(historical_data)
+        Indicators.calculate_resistance_and_support(historical_data)
+
+        MarketDirectionDetector.support_and_resistance(historical_data)
+        MarketDirectionDetector.ema_direction(historical_data)
+        MarketDirectionDetector.macd_direction(historical_data)
+
+        return historical_data

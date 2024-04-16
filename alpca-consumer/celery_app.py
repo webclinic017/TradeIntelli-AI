@@ -18,9 +18,10 @@ def test_task():
 
 # After defining your 'app' (Celery instance) and tasks
 
+
 app.conf.beat_schedule = {
     'test-task-every-5-minutes': {
         'task': 'celery_app.test_task',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/15'),
     },
 }

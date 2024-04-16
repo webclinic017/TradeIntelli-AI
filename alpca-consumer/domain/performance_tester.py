@@ -29,5 +29,13 @@ class PerformanceTester:
         print(f"Finished calculate_profit, indicator: {indicator}, profit:  {profit}")
         return profit
 
+    @staticmethod
+    def calculate_profit_all(historical_data):
+        historical_data["s_r_profit"] = PerformanceTester.calculate_profit(historical_data,
+                                                                           indicator="market_direction")
+        historical_data["ema_profit"] = PerformanceTester.calculate_profit(historical_data,
+                                                                           indicator="ema_market_direction")
+        historical_data["macd_profit"] = PerformanceTester.calculate_profit(historical_data,
+                                                                            indicator="macd_market_direction")
 
 

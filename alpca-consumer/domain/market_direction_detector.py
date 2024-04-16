@@ -1,8 +1,3 @@
-import math
-from scipy.stats import linregress
-import numpy as np
-
-
 class MarketDirectionDetector:
 
     @classmethod
