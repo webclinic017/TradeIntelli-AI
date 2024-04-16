@@ -153,7 +153,7 @@ class CapitalComDataRetriever:
                 "CST": cst_token,
                 "X-SECURITY-TOKEN": x_security_token,
             }
-            print(f"Sending request for {historical_data_url}")
+            print(f"Requesting: {historical_data_url}")
             # Make the request
             response = requests.get(historical_data_url, headers=headers)
             if response.ok:
@@ -194,8 +194,8 @@ class CapitalComDataRetriever:
         market_data_url = f"{cls.base_url}/marketnavigation/{category_id}?limit={limit}"  # Adjust the endpoint as necessary
         response = requests.get(market_data_url, headers=auth_headers)
         if response.ok:
-            gold_data = response.json()
-            return gold_data
+            market_data = response.json()
+            return market_data
         else:
             raise Exception(f"Failed to fetch{category_id}. Status Code:", response.status_code, response.text)
 

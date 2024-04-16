@@ -112,7 +112,7 @@ class HistoricalDataRetriever:
             return None
 
     def get_historical_data(self, stock: str, time_frame, start_date: int = None):
-        symbol = self.symbol_map.get(stock.lower())
+        # symbol = self.symbol_map.get(stock.lower())
         # self.time_frame = self._map_string_to_time_frame(time_frame)
         #
         # if start_date == 0:
@@ -132,7 +132,7 @@ class HistoricalDataRetriever:
         #     historical_data = historical_data.reset_index(level=0, drop=True)
         #     historical_data.index = pd.DatetimeIndex(historical_data.index)
 
-        symbol = self.capital_symbol_map.get(stock.lower())
+        symbol = self.capital_symbol_map.get(stock.lower(), stock)
         time_frame = CapitalComDataRetriever.map_string_to_time_frame(time_frame)
         cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
         historical_data = CapitalComDataRetriever.get_asset_last_bars(cst_token,

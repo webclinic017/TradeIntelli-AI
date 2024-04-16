@@ -7,7 +7,7 @@ app = Celery(
     'worker',
     broker='redis://redis:6379/0',
     backend='redis://redis:6379/0',
-    include=['app.celery_app']
+    include=['celery_app']
 )
 
 
@@ -20,7 +20,7 @@ def test_task():
 
 app.conf.beat_schedule = {
     'test-task-every-5-minutes': {
-        'task': 'app.celery_app.test_task',
+        'task': 'celery_app.test_task',
         'schedule': crontab(minute='*/5'),
     },
 }

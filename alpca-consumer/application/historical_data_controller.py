@@ -20,9 +20,10 @@ async def market_search(stock: str = Query('BTC')):
 
 
 @router.get("/marketnavigation")
-async def market_navigation(category_id: str = Query('hierarchy_v1.commons.most_traded')):
+async def market_navigation(category_id: str = Query('hierarchy_v1.commons.most_traded'),
+                            limit: int = Query(20)):
     cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
-    return CapitalComDataRetriever.market_navigation(cst_token, x_security_token, category_id)
+    return CapitalComDataRetriever.market_navigation(cst_token, x_security_token, category_id, limit=limit)
 
 
 @router.get("/capital-open-new-position")

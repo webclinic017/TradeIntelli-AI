@@ -58,7 +58,7 @@ class MarketDirectionDetector:
 
     @staticmethod
     def support_and_resistance(historical_data):
-        print("deciding market direction")
+        # print("deciding market direction")
         historical_data['market_direction'] = "Uncertain"
 
         for i in range(1, len(historical_data)):
