@@ -14,11 +14,12 @@ function App() {
         <header className="App-header">
         </header>
         <Routes>
-          <Route path="/" element={<StockMovers />} />
-          <Route path="/stockmovers" element={<StockMovers />} />
+          <Route path="/" element={<MarketNavigation />} />
           <Route path="/chartarray" element={<ChartArray />} />
           <Route path="/positions" element={<PositionsContainer />} />
           <Route path="/marketnavigation" element={<MarketNavigation />} />
+          <Route path="/stockmovers" element={<StockMovers />} />
+
         </Routes>
       </div>
     </Router>
