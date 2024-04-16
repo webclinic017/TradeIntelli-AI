@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './TimeFrameSelector.css'; // Assuming your styles are here
 
-const initialSymbols = {
-    'BTC': 'BTC',
-    'gold': 'gold',
-    'nvidia': 'nvidia',
-    'ndx100': 'ndx100',
-    'spx500': 'spx500',
-    'arm': 'arm'
-};
-
 function StockSelector({ onSelect }) {
-    const [symbols, setSymbols] = useState(initialSymbols);
+    const [symbols, setSymbols] = useState({});
     const [inputValue, setInputValue] = useState('');
     const [selectedValue, setSelectedValue] = useState('');
+
+    useEffect(() => {
+        fetch("http://127.0.0.1:8000/marketnavigation?category_id=hierarchy_v1.commons.most_traded&limit=30")
+            .then(response => response.json())
+            .then(data => {
+                const fetchedSymbols = data.markets.reduce((acc, market) => {
+                    acc[market.instrumentName] = market.epic;
+                    return acc;
+                }, {});
+                setSymbols(fetchedSymbols);
+                if (data.markets.length > 0) {
+                    const firstSymbol = data.markets[0].epic;
+                    setSelectedValue(firstSymbol);
+                    onSelect(firstSymbol);
+                }
+            })
+            .catch(error => console.error('Error fetching symbols:', error));
+    }, [onSelect]);
 
     const handleInputChange = (event) => {
         setInputValue(event.target.value);
@@ -38,8 +47,9 @@ function StockSelector({ onSelect }) {
     };
 
     return (
-        <div>
+        <div className="tool-group">
             <input
+            className="timeFrameSelector"
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}

@@ -13,6 +13,12 @@
   margin-bottom: 20px; /* Spacing between the toolbar and the chart */
 }
 
+.tool-group {
+  display: flex;
+  align-items: center;
+  background-color: #f8f8f8; /* Or any color you prefer */
+}
+
 .positions-container table {
   width: 100%;
   border-collapse: collapse;
