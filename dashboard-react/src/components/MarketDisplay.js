@@ -14,12 +14,14 @@ const MarketDisplay = ({ data }) => {
                     <h3>{item.instrumentName}</h3>
                     <p>Symbol: {item.symbol}</p>
                     <p>Epic: {item.epic}</p>
-                    <p style={{ color: item.percentageChange > 0 ? 'green' : 'red' }}>
-                        Change: % {item.percentageChange.toFixed(2)}
-                    </p>
-                    <p style={{ color: item.netChange > 0 ? 'green' : 'red' }}>
-                        Change:  {item.netChange.toFixed(2)}
-                    </p>
+                    <p> Change:
+                    <span style={{ color: item.percentageChange > 0 ? 'green' : 'red' }}>
+                       %{item.percentageChange.toFixed(2)}
+                    </span> </p>
+                    <p> Net Change:
+                    <span style={{ color: item.netChange > 0 ? 'green' : 'red' }}>
+                          {item.netChange.toFixed(2)}
+                    </span> </p>
                     <p>Bid: {item.bid}</p>
                     <p>marketStatus: {item.marketStatus}</p>
                 </div>
