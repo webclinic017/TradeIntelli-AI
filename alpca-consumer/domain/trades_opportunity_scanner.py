@@ -46,7 +46,6 @@ class TradesOpportunityScanner:
             direction = "Up"
 
         if direction:
-            # html_table = cls.gen_html_table(symbol, info)
             subject = f"Trading alert: {symbol} is market is {direction}, {combine_direction} Market"
             body = f"Trading Alert: {symbol} Market is {direction} - {combine_direction}. \n" \
                    f" Here are the details: \n\n {table}"
@@ -54,37 +53,6 @@ class TradesOpportunityScanner:
             RedisService.set_value(redis_key_name, 600, True)
         return combine_direction
 
-    @staticmethod
-    def gen_html_table(symbol, info):
-        return f"""
-        <html>
-        <body>
-        <h2>Trading Alert: {symbol}</h2>
-        <table border="1" style="border-collapse: collapse;">
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-            </tr>
-            <tr>
-                <td>Epic</td>
-                <td>{info['epic']}</td>
-            </tr>
-            <tr>
-                <td>Name</td>
-                <td>{info['name']}</td>
-            </tr>
-            <tr>
-                <td>Instrument Type</td>
-                <td>{info['instrumentType']}</td>
-            </tr>
-            <tr>
-                <td>Bid</td>
-                <td>{info['bid']}</td>
-            </tr>
-        </table>
-        </body>
-        </html>
-        """
     @staticmethod
     def combined_market_direction(symbol, info):
         print(f"check_market_direction for: {symbol}")
@@ -100,14 +68,14 @@ class TradesOpportunityScanner:
             hd_30["market_direction"].iloc[last_pos], hd_30["ema_market_direction"].iloc[last_pos], \
             hd_30["macd_market_direction"].iloc[last_pos]
 
-        s_r_bearish = s_r_direction_4h == s_r_direction_30m == "Bearish"
-        s_r_bullish = s_r_direction_4h == s_r_direction_30m == "Bullish"
+        s_r_bearish = s_r_direction_4h == "Bearish"
+        s_r_bullish = s_r_direction_4h == "Bullish"
 
-        ema_bearish = ema_direction_4h == ema_direction_30m == "Bearish"
-        ema_bullish = ema_direction_4h == ema_direction_30m == "Bullish"
+        ema_bearish = ema_direction_4h == "Bearish"
+        ema_bullish = ema_direction_4h == "Bullish"
 
-        macd_bearish = macd_direction_4h == macd_direction_30m == "Bearish"
-        macd_bullish = macd_direction_4h == macd_direction_30m == "Bullish"
+        macd_bearish = macd_direction_30m == "Bearish"
+        macd_bullish = macd_direction_30m == "Bullish"
 
         if ema_bearish and (macd_bearish or s_r_bearish):
             info["combine_direction"] = "Bearish"
@@ -116,13 +84,16 @@ class TradesOpportunityScanner:
         else:
             info["combine_direction"] = "Uncertain"
 
-        info["s_r_direction_30m"] = s_r_direction_30m
-        info["s_r_direction_4h"] = s_r_direction_4h
+        info["30m_direction"] = {
+            "S_R": s_r_direction_30m,
+            "MACD": macd_direction_30m,
+            "EMA": ema_direction_30m,
+        }
 
-        info["ema_direction_30m"] = ema_direction_30m
-        info["ema_direction_4h"] = ema_direction_4h
-
-        info["macd_direction_4h"] = macd_direction_4h
-        info["macd_direction_30m"] = macd_direction_30m
+        info["4h_direction"] = {
+            "S_R": s_r_direction_4h,
+            "MACD": macd_direction_4h,
+            "EMA": ema_direction_4h,
+        }
 
         return info
