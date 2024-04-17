@@ -121,7 +121,7 @@ class HistoricalDataRetriever:
                                                                       x_security_token,
                                                                       symbol,
                                                                       time_frame,
-                                                                      200,
+                                                                      300,
                                                                       start_from)
 
         if historical_data.empty:
