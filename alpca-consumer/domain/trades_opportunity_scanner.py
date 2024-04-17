@@ -50,20 +50,20 @@ class TradesOpportunityScanner:
             body = f"Trading Alert: {symbol} Market is {direction} - {combine_direction}. \n" \
                    f" Here are the details: \n\n {table}"
             NotificationManager.send_email(f"{symbol}", subject, body)
-            RedisService.set_value(redis_key_name, 600, True)
+            RedisService.set_value(redis_key_name, 60 * 30, True)
         return combine_direction
 
     @staticmethod
-    def combined_market_direction(symbol, info):
+    def combined_market_direction(symbol, info, tail=1):
         print(f"check_market_direction for: {symbol}")
         hd_5 = HistoricalDataRetriever.get_market_date_and_direction(symbol, "4H")
-        last_pos = len(hd_5) - 1
+        last_pos = len(hd_5) - tail
         s_r_direction_4h, ema_direction_4h, macd_direction_4h = \
             hd_5["market_direction"].iloc[last_pos], hd_5["ema_market_direction"].iloc[last_pos], \
             hd_5["macd_market_direction"].iloc[last_pos]
 
         hd_30 = HistoricalDataRetriever.get_market_date_and_direction(symbol, "30M")
-        last_pos = len(hd_30) - 1
+        last_pos = len(hd_30) - tail
         s_r_direction_30m, ema_direction_30m, macd_direction_30m = \
             hd_30["market_direction"].iloc[last_pos], hd_30["ema_market_direction"].iloc[last_pos], \
             hd_30["macd_market_direction"].iloc[last_pos]
