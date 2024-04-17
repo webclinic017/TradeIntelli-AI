@@ -59,6 +59,7 @@ class PerformanceTester:
         long_trade_start_index = 0
         short_trade_start_price = 0
         short_trade_start_index = 0
+
         for i in range(1, period + 1):
             info = {}
             _hd_4h = hd_4h[:len(hd_4h) - period + i]
@@ -72,7 +73,7 @@ class PerformanceTester:
             close_4h = _hd_4h["close"].iloc[len(_hd_4h) - 1]
             info["close_30m"] = close_30m
             info["close_4h"] = close_4h
-            print("calculate_success_rate", info)
+            # print("calculate_success_rate", info)
             predications[_hd_30m.index.max()] = info
             if info["combine_direction"] == "Bullish" and not long_trade_start_price:
                 long_trade_start_price = close_30m

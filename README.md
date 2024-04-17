@@ -4,6 +4,9 @@
 TradeIntelli AI is a cutting-edge trading platform that leverages artificial intelligence to provide users with intelligent trading insights, predictive analytics, and automated trading indicators. Designed for both amateur and seasoned traders, TradeIntelli AI aims to democratize access to advanced trading analytics, making it easier to make informed decisions in the volatile world of stock trading.
 
 ![Chart Image](readme/chart.png)
+![Chart Image](readme/chart2.png)
+![Chart Image](readme/chart3.png)
+![Chart Image](readme/portofolio.png)
 ## Features
 - **AI-Powered Indicators**: Utilize machine learning models to generate predictive trading signals.
 - **Real-Time Market Data**: Access up-to-the-minute prices and market movements.
