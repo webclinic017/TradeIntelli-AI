@@ -104,8 +104,8 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
 
 
 @router.get("/calculate-success-rate")
-async def calculate_success_rate(stock: str = Query('BTC'), time_frame: str = Query("1H")):
-    return PerformanceTester.calculate_success_rate(stock)
+async def calculate_success_rate(stock: str = Query('BTC'), period: int = Query(10)):
+    return PerformanceTester.calculate_success_rate(stock, period)
 
 
 @router.get("/scan-trades-opportunities")

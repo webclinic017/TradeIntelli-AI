@@ -114,26 +114,6 @@ class HistoricalDataRetriever:
             return None
 
     def get_historical_data(self, stock: str, time_frame, start_from: int = None):
-        # symbol = self.symbol_map.get(stock.lower())
-        # self.time_frame = self._map_string_to_time_frame(time_frame)
-        #
-        # if start_date == 0:
-        #     minutes_since_last_market_open = HistoricalDataRetriever.get_minutes_since_last_market_open(symbol, "5m")
-        #     start_date = HistoricalDataRetriever._map_start_time(time_frame) + minutes_since_last_market_open
-        #     print(f"Auto start date: {start_date}")
-        #     print(f"minutes_since_last_market_open: {minutes_since_last_market_open}")
-        #
-        # if stock.lower() in ['gold', "ndx100", "spx500"]:
-        #     historical_data = self.__get_gold_historical_data(symbol, start_date, time_frame)
-        # elif stock.lower() not in ['btc']:
-        #     historical_data = self.__get_stock_historical_data(symbol, start_date)
-        # else:  # Crypto assets
-        #     historical_data = self.__get_crypto_historical_data(start_date)
-        #
-        # if isinstance(historical_data.index, pd.MultiIndex):
-        #     historical_data = historical_data.reset_index(level=0, drop=True)
-        #     historical_data.index = pd.DatetimeIndex(historical_data.index)
-
         symbol = self.capital_symbol_map.get(stock.lower(), stock)
         time_frame = CapitalComDataRetriever.map_string_to_time_frame(time_frame)
         cst_token, x_security_token = CapitalComDataRetriever.create_capital_com_session()
@@ -152,7 +132,7 @@ class HistoricalDataRetriever:
     def get_market_data_and_direction(stock, time_frame, start_from=None, historical_data=None):
         # print(f"get_market_direction: {stock}, {time_frame}")
         historical_data_retriever = HistoricalDataRetriever()
-        if historical_data.empty:
+        if historical_data is None:
             historical_data = historical_data_retriever.get_historical_data(stock, time_frame, start_from)
 
         Indicators.add_ema(historical_data)

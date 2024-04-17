@@ -27,7 +27,7 @@ class TradesOpportunityScanner:
 
     @classmethod
     def check_market_direction(cls, symbol, info):
-        info = cls.combined_market_direction(symbol, info)
+        info = cls.combined_market_direction_strategy(symbol, info)
         combine_direction = info["combine_direction"]
 
         redis_key_name = f'alert_sent_{symbol}_{combine_direction}'
@@ -54,7 +54,7 @@ class TradesOpportunityScanner:
         return combine_direction
 
     @staticmethod
-    def combined_market_direction(symbol, info, tail=1, start_from_str=None, hd_4h=None, hd_30m=None):
+    def combined_market_direction_strategy(symbol, info, tail=1, start_from_str=None, hd_4h=None, hd_30m=None):
         print(f"check_market_direction for: {symbol}")
         if hd_4h.empty:
             hd_4h = HistoricalDataRetriever.get_market_data_and_direction(symbol, "4H", start_from_str)
