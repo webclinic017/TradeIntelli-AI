@@ -93,7 +93,7 @@ async def get_historical_data():
 async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query("1H"),
                               start_date: int = Query(60 * 24)):
     try:
-        historical_data = HistoricalDataRetriever.get_market_date_and_direction(stock, time_frame)
+        historical_data = HistoricalDataRetriever.get_market_data_and_direction(stock, time_frame)
         PerformanceTester.calculate_profit_all(historical_data)
 
         return DataFormatter.formate_data(historical_data, stock)
@@ -101,6 +101,11 @@ async def get_historical_data(stock: str = Query('BTC'), time_frame: str = Query
     except Exception:
         traceback.print_exc()
         return []
+
+
+@router.get("/calculate-success-rate")
+async def calculate_success_rate(stock: str = Query('BTC'), time_frame: str = Query("1H")):
+    return PerformanceTester.calculate_success_rate(stock)
 
 
 @router.get("/scan-trades-opportunities")

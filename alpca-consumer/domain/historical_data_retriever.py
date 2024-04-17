@@ -113,7 +113,7 @@ class HistoricalDataRetriever:
         else:
             return None
 
-    def get_historical_data(self, stock: str, time_frame, start_date: int = None):
+    def get_historical_data(self, stock: str, time_frame, start_from: int = None):
         # symbol = self.symbol_map.get(stock.lower())
         # self.time_frame = self._map_string_to_time_frame(time_frame)
         #
@@ -141,17 +141,19 @@ class HistoricalDataRetriever:
                                                                       x_security_token,
                                                                       symbol,
                                                                       time_frame,
-                                                                      200)
+                                                                      200,
+                                                                      start_from)
 
         if historical_data.empty:
             raise Exception("No data found")
         return historical_data
 
     @staticmethod
-    def get_market_date_and_direction(stock, time_frame):
+    def get_market_data_and_direction(stock, time_frame, start_from=None, historical_data=None):
         # print(f"get_market_direction: {stock}, {time_frame}")
         historical_data_retriever = HistoricalDataRetriever()
-        historical_data = historical_data_retriever.get_historical_data(stock, time_frame)
+        if historical_data.empty:
+            historical_data = historical_data_retriever.get_historical_data(stock, time_frame, start_from)
 
         Indicators.add_ema(historical_data)
         Indicators.add_macd(historical_data)

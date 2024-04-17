@@ -141,8 +141,12 @@ class CapitalComDataRetriever:
 
     @classmethod
     def get_asset_last_bars(cls, cst_token, x_security_token, instrument_symbol="SILVER", timeframe="MINUTE_15",
-                            number_of_bars=50):
+                            number_of_bars=50, start_from=None):
         historical_data_url = f"{cls.base_url}/prices/{instrument_symbol}?resolution={timeframe}&max={number_of_bars}"
+        redis_per = 1
+        if start_from:
+            historical_data_url += f"&from={start_from}"
+            redis_per = 60
 
         historical_data = RedisService.get(historical_data_url)
         if historical_data:
@@ -158,7 +162,7 @@ class CapitalComDataRetriever:
             response = requests.get(historical_data_url, headers=headers)
             if response.ok:
                 historical_data = response.json()
-                RedisService.set_value(historical_data_url, 60, historical_data)
+                RedisService.set_value(historical_data_url, 60 * redis_per, historical_data)
             else:
                 raise Exception(f"Failed to fetch historical data. Status Code: {response.status_code}",
                                 response.text,

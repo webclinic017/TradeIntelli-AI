@@ -54,19 +54,21 @@ class TradesOpportunityScanner:
         return combine_direction
 
     @staticmethod
-    def combined_market_direction(symbol, info, tail=1):
+    def combined_market_direction(symbol, info, tail=1, start_from_str=None, hd_4h=None, hd_30m=None):
         print(f"check_market_direction for: {symbol}")
-        hd_5 = HistoricalDataRetriever.get_market_date_and_direction(symbol, "4H")
-        last_pos = len(hd_5) - tail
+        if hd_4h.empty:
+            hd_4h = HistoricalDataRetriever.get_market_data_and_direction(symbol, "4H", start_from_str)
+        last_pos_4h = len(hd_4h) - tail
         s_r_direction_4h, ema_direction_4h, macd_direction_4h = \
-            hd_5["market_direction"].iloc[last_pos], hd_5["ema_market_direction"].iloc[last_pos], \
-            hd_5["macd_market_direction"].iloc[last_pos]
+            hd_4h["market_direction"].iloc[last_pos_4h], hd_4h["ema_market_direction"].iloc[last_pos_4h], \
+            hd_4h["macd_market_direction"].iloc[last_pos_4h]
 
-        hd_30 = HistoricalDataRetriever.get_market_date_and_direction(symbol, "30M")
-        last_pos = len(hd_30) - tail
+        if hd_30m.empty:
+            hd_30m = HistoricalDataRetriever.get_market_data_and_direction(symbol, "30M", start_from_str)
+        last_pos = len(hd_30m) - tail
         s_r_direction_30m, ema_direction_30m, macd_direction_30m = \
-            hd_30["market_direction"].iloc[last_pos], hd_30["ema_market_direction"].iloc[last_pos], \
-            hd_30["macd_market_direction"].iloc[last_pos]
+            hd_30m["market_direction"].iloc[last_pos], hd_30m["ema_market_direction"].iloc[last_pos], \
+            hd_30m["macd_market_direction"].iloc[last_pos]
 
         s_r_bearish = s_r_direction_4h == "Bearish"
         s_r_bullish = s_r_direction_4h == "Bullish"
@@ -85,12 +87,14 @@ class TradesOpportunityScanner:
             info["combine_direction"] = "Uncertain"
 
         info["30m_direction"] = {
+            "index": hd_30m.index[last_pos],
             "S_R": s_r_direction_30m,
             "MACD": macd_direction_30m,
             "EMA": ema_direction_30m,
         }
 
         info["4h_direction"] = {
+            "index": hd_4h.index[last_pos_4h],
             "S_R": s_r_direction_4h,
             "MACD": macd_direction_4h,
             "EMA": ema_direction_4h,
