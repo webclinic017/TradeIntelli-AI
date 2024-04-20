@@ -78,16 +78,14 @@ http://localhost:3001
 ## Todo:
 1. create bot to open/close trades.
 2. fix performance tester. 
-3. combine timeframe or indicators for better alert. 
-4. review support and resistance lines 
-5. add price-change indicator 
-6. allow users to decide what to show in the chart 
-7. Zoom in and Out 
-8. allow DI with indicators 
-9. add unit tests 
-10. add react to docker 
-11. fixed Docker auto-reload 
-12. added CI/CD
+3. add price-change indicator 
+4. allow users to decide what to show in the chart
+5. allow DI with indicators 
+6. add unit tests 
+7. add react to docker 
+8. fixed Docker auto-reload 
+9. added CI/CD
 
 ## Top features:
 1. studay indicator profit for past 200 bars. 
+2. Zoom in and Out

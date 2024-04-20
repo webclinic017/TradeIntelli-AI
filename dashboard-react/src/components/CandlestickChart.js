@@ -1,26 +1,24 @@
 // src/components/CandlestickChart.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as echarts from 'echarts';
 import './Chart.css';
 import upArrowUrl from '../upArrow.png';
 import downArrowUrl from '../downArrow.png';
 
 function CandlestickChart({ data, id  }) {
+
+    const [theme, setTheme] = useState('light');
     useEffect(() => {
         if (data && data.length > 0) {
             const chartDom = document.getElementById(id);
-            const myChart = echarts.init(chartDom);
+            const myChart = echarts.init(chartDom, theme);
             const marketDirection = data[data.length - 1].market_direction || "Uncertain";
             const ema_market_direction = data[data.length - 1].ema_market_direction || "Uncertain";
             const macd_market_direction = data[data.length - 1].macd_market_direction || "Uncertain";
 
+            const startZoom = (data.length > 50) ? ((data.length - 50) / data.length * 100) : 0;
+            const ZoomWindowSize = 100;
             const option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: {
-                        type: 'cross'
-                    }
-                },
                 xAxis: {
                     type: 'category',
                     data: data.map(item => item.date)  // Dates
@@ -217,15 +215,79 @@ function CandlestickChart({ data, id  }) {
                         });
                         return res;
                     }
-                }
+                },
+                dataZoom: [
+                        {
+                            type: 'inside', // This enables a slider at the bottom of the chart for horizontal scrolling
+                            xAxisIndex: [0], // This targets the first (and only in this case) xAxis defined by the chart configuration
+                            start: startZoom, // This sets the starting zoom range to 0%
+                            end: ZoomWindowSize  // This can be set to a smaller value if you want to start with a zoomed in view
+                        },
+                        {
+                            type: 'slider', // This enables a slider at the bottom of the chart for horizontal scrolling
+                            xAxisIndex: [0], // This targets the first (and only in this case) xAxis defined by the chart configuration
+                            start: startZoom, // This sets the starting zoom range to 0%
+                            end: ZoomWindowSize  // This can be set to a smaller value if you want to start with a zoomed in view
+                        }
+                    ],
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                        show: true,
+                       feature: {
+            saveAsImage: {
+                show: true,
+                title: 'Save'
+            },
 
+            restore: {
+                show: true,
+                title: 'Restore'
+            },
+
+        },
+                    right: 20  // Position the toolbox to the right for better accessibility
+                },
 
             };
             myChart.setOption(option);
+            return () => {
+        myChart.dispose();  // Cleanup: make sure to dispose on component unmount
+    };
         }
-    }, [data, id]);
+    }, [data, id, theme]);
 
-    return <div id={id} className="chart"></div>;
+        const toggleTheme = () => {
+
+                setTheme(currentTheme => currentTheme === 'dark' ? 'light' : 'dark');
+            };
+
+    return (
+            <div style={{ textAlign: 'right', padding: '10px' }}> {/* Container styled to align contents to the right */}
+            <button
+                onClick={toggleTheme}
+                style={{
+                    cursor: 'pointer',
+                    padding: '5px 10px',
+                    fontSize: '16px',
+                    border: 'none',
+                    borderRadius: '20px',
+                    backgroundColor: theme === 'dark' ? '#555' : '#DDD',
+                    color: theme === 'dark' ? '#FFF' : '#333',
+                    outline: 'none',
+                    transition: 'all 0.3s ease'
+                }}
+                     >
+                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+            </button>
+                <div id={id} className="chart"></div>
+
+            </div>
+        );
 }
 
 export default CandlestickChart;
