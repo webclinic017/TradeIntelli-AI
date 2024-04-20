@@ -73,15 +73,19 @@ class TradesOpportunityScanner:
         s_r_bearish = s_r_direction_4h == "Bearish"
         s_r_bullish = s_r_direction_4h == "Bullish"
 
-        ema_bearish = ema_direction_4h == "Bearish"
-        ema_bullish = ema_direction_4h == "Bullish"
+        # ema_bearish = ema_direction_4h == "Bearish"
+        ema_bearish = hd_30m["open"].iloc[last_pos] < hd_30m["EMA50"].iloc[last_pos]
+        # ema_bullish = ema_direction_4h == "Bullish"
+        ema_bullish = hd_30m["open"].iloc[last_pos] > hd_30m["EMA50"].iloc[last_pos]
 
         macd_bearish = macd_direction_30m == "Bearish"
         macd_bullish = macd_direction_30m == "Bullish"
 
-        if ema_bearish and (macd_bearish or s_r_bearish):
+        # if ema_bearish and (macd_bearish or s_r_bearish):
+        if ema_bearish:
             info["combine_direction"] = "Bearish"
-        elif ema_bullish and (macd_bullish or s_r_bullish):
+        # elif ema_bullish and (macd_bullish or s_r_bullish):
+        elif ema_bullish:
             info["combine_direction"] = "Bullish"
         else:
             info["combine_direction"] = "Uncertain"

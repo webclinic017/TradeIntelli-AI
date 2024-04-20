@@ -16,11 +16,11 @@ const MarketDisplay = ({ data }) => {
                     <p>Epic: {item.epic}</p>
                     <p> Change:
                     <span style={{ color: item.percentageChange > 0 ? 'green' : 'red' }}>
-                       %{item.percentageChange.toFixed(2)}
+                       %{item.percentageChange ? item.percentageChange.toFixed(2) : "-"}
                     </span> </p>
                     <p> Net Change:
                     <span style={{ color: item.netChange > 0 ? 'green' : 'red' }}>
-                          {item.netChange.toFixed(2)}
+                          {item.netChange? item.netChange.toFixed(2): "-"}
                     </span> </p>
                     <p>Bid: {item.bid}</p>
                     <p>marketStatus: {item.marketStatus}</p>

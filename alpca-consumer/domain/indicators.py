@@ -36,7 +36,7 @@ class Indicators:
     def add_ema(cls, historical_data):
         historical_data['EMA200'] = cls.__calculate_ema(historical_data, 200)
         historical_data['EMA100'] = cls.__calculate_ema(historical_data, 100)
-        historical_data['EMA50'] = cls.__calculate_ema(historical_data, 50)
+        historical_data['EMA50'] = cls.__calculate_ema(historical_data, 8)
 
     @staticmethod
     def calculate_resistance_and_support(historical_data):
