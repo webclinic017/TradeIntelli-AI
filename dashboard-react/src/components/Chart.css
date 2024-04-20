@@ -20,16 +20,16 @@
 }
 
 .chart {
-    width: 1400px;
-    height: 600px;
+    width: 100%;
+    height: 90%;
     margin: 0 auto;
     display: block;
 }
 
 .chartWithDrawing {
     position: relative;
-    width: 1400px; /* Match the dimensions of your chart */
-    height: 600px; /* Match the dimensions of your chart */
+    width: 100%; /* Match the dimensions of your chart */
+    height: 90%; /* Match the dimensions of your chart */
 }
 .chartWithDrawing > div {
     width: 100%;

@@ -30,7 +30,7 @@ function Chart({ id }) {
                     throw new Error('Network response was not ok');
                 }
                 const jsonData = await response.json();
-                const lastFiftyEntries = jsonData.slice(-100);
+                const lastFiftyEntries = jsonData;
                 setData(lastFiftyEntries);
             } catch (error) {
                 console.error('Failed to fetch data:', error);
@@ -76,8 +76,8 @@ function Chart({ id }) {
                             backgroundColor: isDrawingEnabled ? 'rgba(255,255,255,0.3)' : 'transparent',
                             cursor: isDrawingEnabled ? 'crosshair' : 'default',
                         }}
-                        canvasWidth={1600}
-                        canvasHeight={800}
+                        canvasWidth={1200}
+                        canvasHeight={600}
                         hideGrid={true}
                         brushRadius={1}
                     />

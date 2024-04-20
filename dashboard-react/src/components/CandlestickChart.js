@@ -16,7 +16,7 @@ function CandlestickChart({ data, id  }) {
             const ema_market_direction = data[data.length - 1].ema_market_direction || "Uncertain";
             const macd_market_direction = data[data.length - 1].macd_market_direction || "Uncertain";
 
-            const startZoom = (data.length > 50) ? ((data.length - 50) / data.length * 100) : 0;
+            const startZoom = (data.length > 100) ? ((data.length - 100) / data.length * 100) : 0;
             const ZoomWindowSize = 100;
             const option = {
                 xAxis: {
@@ -78,7 +78,7 @@ function CandlestickChart({ data, id  }) {
                             label: {
                                 show: true, // Show the label
                                 position: 'end', // Position it at the end of the line
-                                formatter: 'Resistance: {c}',
+                                formatter: '{c} Resistance',
                                 color: 'red' // Match the line color
                             },
                         }]
@@ -99,7 +99,7 @@ function CandlestickChart({ data, id  }) {
                             label: {
                                 show: true, // Show the label
                                 position: 'end', // Position it at the end of the line
-                                formatter: 'Support: {c}',
+                                formatter: '{c} Support',
                                 color: 'green' // Match the line color
                             },
                         }]
@@ -267,7 +267,7 @@ function CandlestickChart({ data, id  }) {
             };
 
     return (
-            <div style={{ textAlign: 'right', padding: '10px' }}> {/* Container styled to align contents to the right */}
+            <div style={{ textAlign: 'left'}}> {/* Container styled to align contents to the right */}
             <button
                 onClick={toggleTheme}
                 style={{
@@ -282,7 +282,7 @@ function CandlestickChart({ data, id  }) {
                     transition: 'all 0.3s ease'
                 }}
                      >
-                {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+                {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
             </button>
                 <div id={id} className="chart"></div>
 
