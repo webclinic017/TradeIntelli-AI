@@ -45,7 +45,23 @@ function CandlestickChart({ data, id  }) {
                         data: data.map(item => item.EMA200),  // EMA 200 values
                         smooth: true,
                         color: 'black',
-                        symbol: 'none'
+                        symbol: 'none',
+                        markPoint: {
+                            data: [
+                                {
+                                    type: 'max',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'black'
+                                    },
+                                },
+                            ]
+                        }
                     },
                     {
                         name: 'EMA100',
@@ -53,7 +69,23 @@ function CandlestickChart({ data, id  }) {
                         data: data.map(item => item.EMA100),  // EMA 100 values
                         smooth: true,
                         color: 'red',
-                        symbol: 'none' // Fuchsia
+                        symbol: 'none',
+                        markPoint: {
+                            data: [
+                                {
+                                    type: 'max',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'red'
+                                    },
+                                },
+                            ]
+                        }
                     },
                     {
                         name: 'EMA50',
@@ -61,7 +93,23 @@ function CandlestickChart({ data, id  }) {
                         data: data.map(item => item.EMA50),  // EMA 50 values
                         smooth: true,
                         color: 'green',
-                        symbol: 'none'
+                        symbol: 'none',
+                        markPoint: {
+                            data: [
+                                {
+                                    type: 'max',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'green'
+                                    },
+                                },
+                            ]
+                        }
                     },
                     {
                         name: 'Resistance',
@@ -110,46 +158,47 @@ function CandlestickChart({ data, id  }) {
                 graphic: [
                     {
                         type: 'text',
-                        left: 'center',
+                        left: 100,
                         top: 20, // Adjusted for better visualization with the arrow
                         style: {
-                            text: `Support and Resistance Market Direction: ${marketDirection}`, // Dynamic label
+                            text: `S&R: ${marketDirection}`, // Dynamic label
                             fill: marketDirection === "Bullish" ? 'green' : marketDirection === "Bearish" ? 'red' : 'grey',
                             fontSize: 15
                         }
                     },
                     {
-                        type: 'text',
-                        left: 'center',
-                        top: 40, // Adjusted for better visualization with the arrow
-                        style: {
-                            text: `MACD Market Direction: ${macd_market_direction}`, // Dynamic label
-                            fill: macd_market_direction === "Bullish" ? 'green' : macd_market_direction === "Bearish" ? 'red' : 'grey',
-                            fontSize: 15
-                        }
-                    },
-                    {
-                        type: 'text',
-                        left: 'center',
-                        top: 60, // Adjusted for better visualization with the arrow
-                        style: {
-                            text: `EMA Market Direction: ${ema_market_direction}`, // Dynamic label
-                            fill: ema_market_direction === "Bullish" ? 'green' : ema_market_direction === "Bearish" ? 'red' : 'grey',
-                            fontSize: 15
-                        }
-                    },
-
-                    {
                         type: 'image',
-                        left: 'center',
-                        top: 80, // Adjust based on the exact positioning you want
+                        left: 200,
+                        top: 20, // Adjust based on the exact positioning you want
                         style: {
                             image: marketDirection === "Bullish" ? upArrowUrl : marketDirection === "Bearish" ? downArrowUrl : '',
                             width: 20,
                             height: 20
                         },
                         z: 100 // Ensure the image is displayed above other chart elements
-                    }
+                    },
+                    {
+                        type: 'text',
+                        left: 300,
+                        top: 20, // Adjusted for better visualization with the arrow
+                        style: {
+                            text: `MACD: ${macd_market_direction}`, // Dynamic label
+                            fill: macd_market_direction === "Bullish" ? 'green' : macd_market_direction === "Bearish" ? 'red' : 'grey',
+                            fontSize: 15
+                        }
+                    },
+                    {
+                        type: 'text',
+                        left: 500,
+                        top: 20, // Adjusted for better visualization with the arrow
+                        style: {
+                            text: `EMA: ${ema_market_direction}`, // Dynamic label
+                            fill: ema_market_direction === "Bullish" ? 'green' : ema_market_direction === "Bearish" ? 'red' : 'grey',
+                            fontSize: 15
+                        }
+                    },
+
+
                 ],
                 tooltip: {
                     trigger: 'axis',
