@@ -56,14 +56,14 @@ class TradesOpportunityScanner:
     @staticmethod
     def combined_market_direction_strategy(symbol, info, tail=1, start_from_str=None, hd_4h=None, hd_30m=None):
         print(f"check_market_direction for: {symbol}")
-        if hd_4h.empty:
+        if hd_4h is None:
             hd_4h = HistoricalDataRetriever.get_market_data_and_direction(symbol, "4H", start_from_str)
         last_pos_4h = len(hd_4h) - tail
         s_r_direction_4h, ema_direction_4h, macd_direction_4h = \
             hd_4h["market_direction"].iloc[last_pos_4h], hd_4h["ema_market_direction"].iloc[last_pos_4h], \
             hd_4h["macd_market_direction"].iloc[last_pos_4h]
 
-        if hd_30m.empty:
+        if hd_30m is None:
             hd_30m = HistoricalDataRetriever.get_market_data_and_direction(symbol, "30M", start_from_str)
         last_pos = len(hd_30m) - tail
         s_r_direction_30m, ema_direction_30m, macd_direction_30m = \
@@ -82,10 +82,10 @@ class TradesOpportunityScanner:
         macd_bullish = macd_direction_30m == "Bullish"
 
         # if ema_bearish and (macd_bearish or s_r_bearish):
-        if ema_bearish:
+        if ema_bearish and s_r_bearish:
             info["combine_direction"] = "Bearish"
         # elif ema_bullish and (macd_bullish or s_r_bullish):
-        elif ema_bullish:
+        elif ema_bullish and s_r_bullish:
             info["combine_direction"] = "Bullish"
         else:
             info["combine_direction"] = "Uncertain"

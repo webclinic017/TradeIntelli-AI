@@ -60,6 +60,18 @@ function CandlestickChart({ data, id  }) {
                                         color: 'black'
                                     },
                                 },
+                                {
+                                    type: 'min',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'black'
+                                    },
+                                },
                             ]
                         }
                     },
@@ -84,6 +96,18 @@ function CandlestickChart({ data, id  }) {
                                         color: 'red'
                                     },
                                 },
+                                {
+                                    type: 'min',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'red'
+                                    },
+                                },
                             ]
                         }
                     },
@@ -98,6 +122,19 @@ function CandlestickChart({ data, id  }) {
                             data: [
                                 {
                                     type: 'max',
+                                    symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
+                                    label: {
+                                        show: true,
+                                        position: 'right',  // Label will be on the right; adjust as needed
+                                        formatter: function (params) {
+
+                                            return params.value.toFixed(2);  // Displays the value of the mark point
+                                        },
+                                        color: 'green'
+                                    },
+                                },
+                                {
+                                    type: 'min',
                                     symbolSize: 0,  // Adjust the size of the mark point symbol if necessary
                                     label: {
                                         show: true,

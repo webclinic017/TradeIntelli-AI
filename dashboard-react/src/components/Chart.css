@@ -16,7 +16,7 @@
   padding: 10px;
   background-color: #f8f8f8; /* Or any color you prefer */
   border-bottom: 1px solid #e1e1e1; /* For a subtle separator */
-  margin-bottom: 20px; /* Spacing between the toolbar and the chart */
+  margin-bottom: 10px; /* Spacing between the toolbar and the chart */
 }
 
 .chart {
@@ -44,7 +44,7 @@
 }
 
 .vertical-toolbar {
-  flex-basis: 150px; /* Adjust based on your toolbar width preference */
+  flex-basis: 6%; /* Adjust based on your toolbar width preference */
   flex-shrink: 0; /* Prevents the toolbar from shrinking */
   /* Your existing vertical-toolbar styles */
   display: flex;
@@ -53,7 +53,7 @@
   padding: 10px;
   background-color: #f8f8f8;
   border-right: 1px solid #e1e1e1;
-  padding: 30px 10px 10px; /* Increased top padding */
+  padding: 10px 10px 10px; /* Increased top padding */
 }
 
 .content {

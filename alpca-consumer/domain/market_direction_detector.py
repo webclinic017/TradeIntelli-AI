@@ -61,9 +61,9 @@ class MarketDirectionDetector:
             resistance = historical_data['resistance'].iloc[i]
             if resistance and support:
                 q = (resistance - support) * 0.25
-                quarter_range_above_support = support + q
+                quarter_range_above_support = support + (2 * q)
                 # half_range = support + (q * 2)
-                quarter_range_below_resistance = resistance - q
+                quarter_range_below_resistance = resistance - (2 * q)
                 current_price = historical_data['close'].iloc[i]
                 previous_price = historical_data['close'].iloc[i - 1]
                 going_up = current_price > previous_price
