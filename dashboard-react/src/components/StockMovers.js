@@ -7,7 +7,7 @@ const StockMovers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://16.171.39.64:8000/stocks-movers');
+        const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/stocks-movers');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

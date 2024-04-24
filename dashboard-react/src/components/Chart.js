@@ -25,7 +25,7 @@ function Chart({ id }) {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await fetch(`http://16.171.39.64:8000/historical-data/?stock=${selectedStock}&time_frame=${selectedTimeFrame}&start_date=${selectedStartDate}`);
+                const response = await fetch(process.env.REACT_APP_API_BASE_URL + `/historical-data/?stock=${selectedStock}&time_frame=${selectedTimeFrame}&start_date=${selectedStartDate}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

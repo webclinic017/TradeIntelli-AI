@@ -7,7 +7,7 @@ function StockSelector({ onSelect }) {
     const [selectedValue, setSelectedValue] = useState('');
 
     useEffect(() => {
-        fetch("http://16.171.39.64:8000/marketnavigation?category_id=hierarchy_v1.commons.most_traded&limit=30")
+        fetch(process.env.REACT_APP_API_BASE_URL + "/marketnavigation?category_id=hierarchy_v1.commons.most_traded&limit=30")
             .then(response => response.json())
             .then(data => {
                 const fetchedSymbols = data.markets.reduce((acc, market) => {

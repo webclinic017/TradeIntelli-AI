@@ -7,13 +7,13 @@ function PositionsContainer() {
 
   useEffect(() => {
     // Fetch positions
-    fetch('http://16.171.39.64:8000/capital-open-position')
+    fetch(process.env.REACT_APP_API_BASE_URL + '/capital-open-position')
       .then(response => response.json())
       .then(data => setPositions(data.positions))
       .catch(error => console.error('Error fetching positions:', error));
 
     // Fetch account information
-    fetch('http://16.171.39.64:8000/capital-account_info')
+    fetch(process.env.REACT_APP_API_BASE_URL + '/capital-account_info')
       .then(response => response.json())
       .then(data => setAccountInfo(data.accounts[0]))  // Assuming we're interested in the first account
       .catch(error => console.error('Error fetching account information:', error));
