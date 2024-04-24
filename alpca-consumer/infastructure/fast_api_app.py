@@ -10,19 +10,12 @@ class FastAPIApp:
         if not FastAPIApp.app:
             FastAPIApp.app = FastAPI()
             origins = [
-                "http://0.0.0.0:3000",  # The correct client origin
-                "http://0.0.0.0:8000",  # The correct client origin
-                "http://localhost:3000",  # The correct client origin
-                "http://localhost:8000",  # The correct client origin
-                "http://127.0.0.1:3000",
-                "http://127.0.0.1:8000",
                 "*",
-                "*:3000",
             ]
 
             FastAPIApp.app.add_middleware(
                 CORSMiddleware,
-                allow_origins=["*"],
+                allow_origins=origins,
                 allow_credentials=True,
                 allow_methods=["*"],
                 allow_headers=["*"],
