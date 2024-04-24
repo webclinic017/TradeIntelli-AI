@@ -7,6 +7,7 @@ const MarketNavigation = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+    console.log(process.env.REACT_APP_API_BASE_URL)
         fetch(process.env.REACT_APP_API_BASE_URL + '/marketnavigation?category_id=hierarchy_v1.commons.most_traded')
             .then(response => response.json())
             .then(data => {
