@@ -7,7 +7,7 @@ const MarketNavigation = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('http://127.0.0.1:8000/marketnavigation?category_id=hierarchy_v1.commons.most_traded')
+        fetch('http://16.171.39.64/:8000/marketnavigation?category_id=hierarchy_v1.commons.most_traded')
             .then(response => response.json())
             .then(data => {
                 setData(data); // Assuming 'data' is the object containing 'markets'
