@@ -10,6 +10,8 @@ class FastAPIApp:
         if not FastAPIApp.app:
             FastAPIApp.app = FastAPI()
             origins = [
+                "http://0.0.0.0:3000",  # The correct client origin
+                "http://0.0.0.0:8000",  # The correct client origin
                 "http://localhost:3000",  # The correct client origin
                 "http://localhost:8000",  # The correct client origin
                 "http://127.0.0.1:3000",
