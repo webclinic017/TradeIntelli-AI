@@ -81,8 +81,7 @@ http://localhost:3001
 3. add price-change indicator 
 4. allow users to decide what to show in the chart
 5. allow DI with indicators 
-6. add unit tests 
-7. add react to docker 
+6. add unit tests
 8. fixed Docker auto-reload 
 9. added CI/CD
 

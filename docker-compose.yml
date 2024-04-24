@@ -42,3 +42,13 @@ services:
       - redis
     environment:
       - PYTHONUNBUFFERED=1
+
+  npm:
+    build: ./dashboard-react
+    working_dir: /app
+    depends_on:
+      - web
+    ports:
+      - "80:3000"
+    volumes:
+      - ./dashboard-react:/app

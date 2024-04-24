@@ -10,7 +10,7 @@ class FastAPIApp:
         if not FastAPIApp.app:
             FastAPIApp.app = FastAPI()
             origins = [
-                "http://16.171.181.119:3000",
+                "http://127.0.0.1:3000",
                 "*",
             ]
 

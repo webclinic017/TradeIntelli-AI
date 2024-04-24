@@ -7,7 +7,7 @@ const StockMovers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://16.171.181.119:8000/stocks-movers');
+        const response = await fetch('http://127.0.0.1:8000/stocks-movers');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

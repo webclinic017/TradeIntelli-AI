@@ -10,3 +10,6 @@ install-npm:
 
 install-npm-server:
 	sudo npm install -g serve
+
+run-npm-server:
+	sudo serve -s build -g 80
