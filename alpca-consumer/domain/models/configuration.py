@@ -1,4 +1,3 @@
-from fastapi import APIRouter
 from sqlalchemy import Column, Integer, Boolean, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
