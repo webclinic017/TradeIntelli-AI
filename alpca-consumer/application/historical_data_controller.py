@@ -3,10 +3,8 @@ from fastapi import Query, APIRouter, HTTPException
 from application.data_formatter import DataFormatter
 from domain.capital_com_data_retriever import CapitalComDataRetriever
 from domain.historical_data_retriever import HistoricalDataRetriever
-from domain.indicators import Indicators
 import traceback
 import requests
-from domain.market_direction_detector import MarketDirectionDetector
 from domain.performance_tester import PerformanceTester
 from domain.trades_opportunity_scanner import TradesOpportunityScanner
 
